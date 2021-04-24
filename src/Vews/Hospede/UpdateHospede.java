@@ -1,303 +1,45 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Vews.Hospede;
 
 import Controller.HospedeDAO;
 import Models.Hospede;
-import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
-import javax.accessibility.AccessibleContext;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JTextField;
-import javax.swing.table.TableModel;
 
+/**
+ *
+ * @author Zita_Office
+ */
 public class UpdateHospede extends javax.swing.JFrame {
-
-    /**
-     * Creates new form UpdateHospede
-     */
     public void ChangeColor(JPanel painel,Color cor){
         painel.setBackground(cor);
     }
     String [] tipoDoc={" ","B.I","Passaporte"};
+    /**
+     * Creates new form actualizarHospede
+     */
     public UpdateHospede() {
         initComponents();
+        this.setLocationRelativeTo(null);
         String tDoc[]=new String[tipoDoc.length];
         for(int i=0;i<tipoDoc.length;i++){
             tDoc[i]=tipoDoc[i];
         }
         tipoDocCB.setModel(new javax.swing.DefaultComboBoxModel<>(tDoc));
         this.setLocationRelativeTo(null);
-             
     }
 
-    public String[] getTipoDoc() {
-        return tipoDoc;
-    }
-
-    public void setTipoDoc(String[] tipoDoc) {
-        this.tipoDoc = tipoDoc;
-    }
-
-    public JTextField getIdTf() {
-        return IdTf;
-    }
-
-    public void setIdTf(JTextField IdTf) {
-        this.IdTf = IdTf;
-    }
-
-    public JTextField getApelidoTf() {
-        return apelidoTf;
-    }
-
-    public void setApelidoTf(JTextField apelidoTf) {
-        this.apelidoTf = apelidoTf;
-    }
-
-    public JLabel getCancel() {
-        return cancel;
-    }
-
-    public void setCancel(JLabel cancel) {
-        this.cancel = cancel;
-    }
-
-    public JPanel getCancelButton() {
-        return cancelButton;
-    }
-
-    public void setCancelButton(JPanel cancelButton) {
-        this.cancelButton = cancelButton;
-    }
-
-    public JTextField getDataNascimentoTf() {
-        return dataNascimentoTf;
-    }
-
-    public void setDataNascimentoTf(JTextField dataNascimentoTf) {
-        this.dataNascimentoTf = dataNascimentoTf;
-    }
-
-    public JLabel getDelete() {
-        return delete;
-    }
-
-    public void setDelete(JLabel delete) {
-        this.delete = delete;
-    }
-
-    public JPanel getDeleteButton() {
-        return deleteButton;
-    }
-
-    public void setDeleteButton(JPanel deleteButton) {
-        this.deleteButton = deleteButton;
-    }
-
-    public JTextField getEmailTf() {
-        return emailTf;
-    }
-
-    public void setEmailTf(JTextField emailTf) {
-        this.emailTf = emailTf;
-    }
-
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
-    }
-
-    public JLabel getjLabel10() {
-        return jLabel10;
-    }
-
-    public void setjLabel10(JLabel jLabel10) {
-        this.jLabel10 = jLabel10;
-    }
-
-    public JLabel getjLabel12() {
-        return jLabel12;
-    }
-
-    public void setjLabel12(JLabel jLabel12) {
-        this.jLabel12 = jLabel12;
-    }
-
-    public JLabel getjLabel2() {
-        return jLabel2;
-    }
-
-    public void setjLabel2(JLabel jLabel2) {
-        this.jLabel2 = jLabel2;
-    }
-
-    public JLabel getjLabel3() {
-        return jLabel3;
-    }
-
-    public void setjLabel3(JLabel jLabel3) {
-        this.jLabel3 = jLabel3;
-    }
-
-    public JLabel getjLabel4() {
-        return jLabel4;
-    }
-
-    public void setjLabel4(JLabel jLabel4) {
-        this.jLabel4 = jLabel4;
-    }
-
-    public JLabel getjLabel5() {
-        return jLabel5;
-    }
-
-    public void setjLabel5(JLabel jLabel5) {
-        this.jLabel5 = jLabel5;
-    }
-
-    public JLabel getjLabel6() {
-        return jLabel6;
-    }
-
-    public void setjLabel6(JLabel jLabel6) {
-        this.jLabel6 = jLabel6;
-    }
-
-    public JLabel getjLabel7() {
-        return jLabel7;
-    }
-
-    public void setjLabel7(JLabel jLabel7) {
-        this.jLabel7 = jLabel7;
-    }
-
-    public JLabel getjLabel8() {
-        return jLabel8;
-    }
-
-    public void setjLabel8(JLabel jLabel8) {
-        this.jLabel8 = jLabel8;
-    }
-
-    public JLabel getjLabel9() {
-        return jLabel9;
-    }
-
-    public void setjLabel9(JLabel jLabel9) {
-        this.jLabel9 = jLabel9;
-    }
-
-    public JPanel getjPanel1() {
-        return jPanel1;
-    }
-
-    public void setjPanel1(JPanel jPanel1) {
-        this.jPanel1 = jPanel1;
-    }
-
-    public JPanel getjPanel2() {
-        return jPanel2;
-    }
-
-    public void setjPanel2(JPanel jPanel2) {
-        this.jPanel2 = jPanel2;
-    }
-
-    public JTextField getNacionalidadeTf() {
-        return nacionalidadeTf;
-    }
-
-    public void setNacionalidadeTf(JTextField nacionalidadeTf) {
-        this.nacionalidadeTf = nacionalidadeTf;
-    }
-
-    public JTextField getNomeTf() {
-        return nomeTf;
-    }
-
-    public void setNomeTf(JTextField nomeTf) {
-        this.nomeTf = nomeTf;
-    }
-
-    public JTextField getNrDocTf() {
-        return nrDocTf;
-    }
-
-    public void setNrDocTf(JTextField nrDocTf) {
-        this.nrDocTf = nrDocTf;
-    }
-
-    public JTextField getNumHospedeTf() {
-        return numHospedeTf;
-    }
-
-    public void setNumHospedeTf(JTextField numHospedeTf) {
-        this.numHospedeTf = numHospedeTf;
-    }
-
-    public JTextField getTelefoneTf() {
-        return telefoneTf;
-    }
-
-    public void setTelefoneTf(JTextField telefoneTf) {
-        this.telefoneTf = telefoneTf;
-    }
-
-    public JComboBox<String> getTipoDocCB() {
-        return tipoDocCB;
-    }
-
-    public void setTipoDocCB(JComboBox<String> tipoDocCB) {
-        this.tipoDocCB = tipoDocCB;
-    }
-
-    public JLabel getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(JLabel update) {
-        this.update = update;
-    }
-
-    public JPanel getUpdateButton() {
-        return updateButton;
-    }
-
-    public void setUpdateButton(JPanel updateButton) {
-        this.updateButton = updateButton;
-    }
-
-    public JRootPane getRootPane() {
-        return rootPane;
-    }
-
-    public void setRootPane(JRootPane rootPane) {
-        this.rootPane = rootPane;
-    }
-
-    public boolean isRootPaneCheckingEnabled() {
-        return rootPaneCheckingEnabled;
-    }
-
-    public void setRootPaneCheckingEnabled(boolean rootPaneCheckingEnabled) {
-        this.rootPaneCheckingEnabled = rootPaneCheckingEnabled;
-    }
-
-    public AccessibleContext getAccessibleContext() {
-        return accessibleContext;
-    }
-
-    public void setAccessibleContext(AccessibleContext accessibleContext) {
-        this.accessibleContext = accessibleContext;
-    }
-   
-
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -348,13 +90,28 @@ public class UpdateHospede extends javax.swing.JFrame {
         jLabel2.setText("Nome:");
 
         nomeTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        nomeTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nomeTfKeyTyped(evt);
+            }
+        });
 
         apelidoTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        apelidoTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apelidoTfKeyTyped(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel3.setText("Apelido:");
 
         telefoneTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        telefoneTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                telefoneTfKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel4.setText(" Telefone:");
@@ -377,8 +134,18 @@ public class UpdateHospede extends javax.swing.JFrame {
         jLabel8.setText("  Nr de Doc:");
 
         nrDocTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        nrDocTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nrDocTfKeyTyped(evt);
+            }
+        });
 
         nacionalidadeTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        nacionalidadeTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nacionalidadeTfKeyTyped(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel9.setText("Nacionalidade:");
@@ -462,6 +229,9 @@ public class UpdateHospede extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 IdTfKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                IdTfKeyTyped(evt);
+            }
         });
 
         jLabel12.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
@@ -505,6 +275,11 @@ public class UpdateHospede extends javax.swing.JFrame {
         jLabel10.setText("Numero do Hospede:");
 
         numHospedeTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        numHospedeTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                numHospedeTfKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -570,7 +345,7 @@ public class UpdateHospede extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(telefoneTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(apelidoTf, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -628,7 +403,7 @@ public class UpdateHospede extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -638,30 +413,34 @@ public class UpdateHospede extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        new HospedeDAO().remove(Integer.parseInt(IdTf.getText()));
+        this.dispose();
+    }//GEN-LAST:event_deleteButtonMouseClicked
+
+    private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
+        ChangeColor(deleteButton,new Color(255,255,255));
+        delete.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_deleteButtonMouseEntered
+
+    private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
+        ChangeColor(deleteButton,new Color(82,82,82));
+        delete.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_deleteButtonMouseExited
+
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
         this.dispose();
     }//GEN-LAST:event_cancelButtonMouseClicked
 
-    private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
-        Hospede hospede = new Hospede();
-        if(nomeTf.getText().isEmpty() || apelidoTf.getText().isEmpty() || emailTf.getText().isEmpty()
-               || dataNascimentoTf.getText().isEmpty()||nrDocTf.getText().isEmpty()||nacionalidadeTf.getText().isEmpty()||numHospedeTf.getText().isEmpty()){
-           JOptionPane.showMessageDialog(null, "Por favor, introduza todos dados nos campor de texto!");
-       }else{
-        hospede.setIdPessoa(Integer.parseInt(IdTf.getText()));
-        hospede.setNome(nomeTf.getText());
-        hospede.setApelido(apelidoTf.getText());
-        hospede.setTelefone(telefoneTf.getText());
-        hospede.setEmail(emailTf.getText());
-        hospede.setDataNascimento(dataNascimentoTf.getText());
-        int index=tipoDocCB.getSelectedIndex();
-        hospede.setTipoDeDoc(tipoDoc[index]);        
-        hospede.setNrDoc(nrDocTf.getText());
-        hospede.setNacionalidade(nacionalidadeTf.getText());
-        hospede.setNrHospede(Integer.parseInt(numHospedeTf.getText()));
-        new HospedeDAO().update(hospede);
-        this.dispose();}
-    }//GEN-LAST:event_updateButtonMouseClicked
+    private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
+        ChangeColor(cancelButton,new Color(255,255,255));
+        cancel.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_cancelButtonMouseEntered
+
+    private void cancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseExited
+        ChangeColor(cancelButton,new Color(82,82,82));
+        cancel.setForeground(new Color(255,255,255));
+    }//GEN-LAST:event_cancelButtonMouseExited
 
     private void IdTfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IdTfFocusGained
         if(IdTf.getText().equals("De seguida clica Enter...")){
@@ -702,24 +481,30 @@ public class UpdateHospede extends javax.swing.JFrame {
             nacionalidadeTf.setText(hospede.getNacionalidade());
             dataNascimentoTf.setText(hospede.getDataNascimento());
             numHospedeTf.setText(hospede.getNrHospede().toString());
-           
+
         }
     }//GEN-LAST:event_IdTfKeyPressed
 
-    private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
-        ChangeColor(deleteButton,new Color(255,255,255));
-        delete.setForeground(new Color(0,0,0));
-    }//GEN-LAST:event_deleteButtonMouseEntered
-
-    private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
-        ChangeColor(deleteButton,new Color(82,82,82));
-        delete.setForeground(new Color(255,255,255));
-    }//GEN-LAST:event_deleteButtonMouseExited
-
-    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
-        new HospedeDAO().remove(Integer.parseInt(IdTf.getText()));
-        this.dispose();
-    }//GEN-LAST:event_deleteButtonMouseClicked
+    private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
+        Hospede hospede = new Hospede();
+        if(nomeTf.getText().isEmpty() || apelidoTf.getText().isEmpty() || emailTf.getText().isEmpty()
+            || dataNascimentoTf.getText().isEmpty()||nrDocTf.getText().isEmpty()||nacionalidadeTf.getText().isEmpty()||numHospedeTf.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor, introduza todos dados nos campor de texto!");
+        }else{
+            hospede.setIdPessoa(Integer.parseInt(IdTf.getText()));
+            hospede.setNome(nomeTf.getText());
+            hospede.setApelido(apelidoTf.getText());
+            hospede.setTelefone(telefoneTf.getText());
+            hospede.setEmail(emailTf.getText());
+            hospede.setDataNascimento(dataNascimentoTf.getText());
+            int index=tipoDocCB.getSelectedIndex();
+            hospede.setTipoDeDoc(tipoDoc[index]);
+            hospede.setNrDoc(nrDocTf.getText());
+            hospede.setNacionalidade(nacionalidadeTf.getText());
+            hospede.setNrHospede(Integer.parseInt(numHospedeTf.getText()));
+            new HospedeDAO().update(hospede);
+            this.dispose();}
+    }//GEN-LAST:event_updateButtonMouseClicked
 
     private void updateButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseEntered
         ChangeColor(updateButton,new Color(255,255,255));
@@ -731,15 +516,51 @@ public class UpdateHospede extends javax.swing.JFrame {
         update.setForeground(new Color(255,255,255));
     }//GEN-LAST:event_updateButtonMouseExited
 
-    private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
-        ChangeColor(cancelButton,new Color(255,255,255));
-        cancel.setForeground(new Color(0,0,0));
-    }//GEN-LAST:event_cancelButtonMouseEntered
+    private void IdTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IdTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_IdTfKeyTyped
 
-    private void cancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseExited
-        ChangeColor(cancelButton,new Color(82,82,82));
-        cancel.setForeground(new Color(255,255,255));
-    }//GEN-LAST:event_cancelButtonMouseExited
+    private void nomeTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nomeTfKeyTyped
+
+    private void apelidoTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apelidoTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_apelidoTfKeyTyped
+
+    private void telefoneTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefoneTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_telefoneTfKeyTyped
+
+    private void nrDocTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nrDocTfKeyTyped
+        
+    }//GEN-LAST:event_nrDocTfKeyTyped
+
+    private void nacionalidadeTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nacionalidadeTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nacionalidadeTfKeyTyped
+
+    private void numHospedeTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numHospedeTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_numHospedeTfKeyTyped
 
     /**
      * @param args the command line arguments
@@ -766,6 +587,7 @@ public class UpdateHospede extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UpdateHospede.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

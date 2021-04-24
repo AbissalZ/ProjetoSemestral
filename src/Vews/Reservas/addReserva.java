@@ -366,7 +366,7 @@ public class addReserva extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, introduza todos dados nos campor de texto!");
         }else{
             Reservas reserva = new Reservas();
-            int codRes=(int)(1000+Math.random());
+            int codRes=(int)(10000+Math.random()* (10000-1000+1));
             reserva.setCodReserva(codRes);
             SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyy"); 
             reserva.setDataChegada(sdf1.format(dataChegadaDc.getDate()));//dataChegadaTf.getText()

@@ -5,14 +5,27 @@
  */
 package Vews;
 
+import Controller.HospedagemDAO;
+import Controller.QuartoDAO;
+import Models.Hospedagem;
+import Models.Quarto;
+import Models.Reservas;
+import Vews.Hospedagem.AddHospedagens;
+import Vews.Hospedagem.UpdateHospedagens;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.sql.Time;
+import static java.lang.Thread.sleep;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -20,17 +33,57 @@ import net.miginfocom.swing.MigLayout;
  * @author Zita_Office
  */
 public class PainelQuartos extends javax.swing.JInternalFrame {
-
+    
+     boolean cont;
+    Runnable runable;
+    Runnable runnable;
     /**
      * Creates new form TelaQuartos
      */
-    public PainelQuartos() {
-        super(null,false,false,false);
+    public PainelQuartos() throws InterruptedException {
+        
+        this.runable = () ->{
+            /*while(true){
+                
+                List <Quarto> quart = new QuartoDAO().findAll();
+        
+                if(quart.get(1).getDisp().equals("nao disponivel")){
+                    //disponibilidade.setBackground(new Color(241, 95, 95));
+                    cont=false;
+                    System.out.println(cont);
+                }
+                else if(quart.get(1).getDisp().equals("reservado")){
+                    //disponibilidade.setBackground(new Color(88, 168, 247));
+                    cont=true;
+                    System.out.println(cont);
+                }
+            }*/
+        };
+        
+        this.runnable = () ->{
+            HospedagemDAO dao = new HospedagemDAO();
+            List <Hospedagem> listaH = dao.findAll();
+            Date data = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String dataAct=sdf.format(data);
+            for(int i=0;i<listaH.size();i++){
+                int id=listaH.get(i).getQuarto().getIdQuarto();
+                if(id==1){
+                    if(listaH.get(i).getNrDeHospedes()!=0){
+                        if(listaH.get(i).getDataSaida().equals(dataAct)){
+                            JOptionPane.showMessageDialog(null, "A data de Saida do Hospede do quarto 1\n expira dentro de 1 Hora.!");
+                       }
+                    }
+                }
+            }
+        };
         initComponents();
-        
         PainelQuartos.setLayout(new MigLayout("wrap 5"));
-        PainelQuartos.setBackground(new Color(0,0,0,1));   
-        
+        PainelQuartos.setBackground(new Color(0,0,0,1)); 
+    }
+    
+    public void ChangeColor(JPanel painel,Color cor){
+        painel.setBackground(cor);
     }
 
     /**
@@ -41,6 +94,7 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         ImageIcon icon = new ImageIcon(getClass().getResource("1opcao.jpg"));
         Image image = icon.getImage();
@@ -58,27 +112,326 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         PainelQuartos = new javax.swing.JPanel();
         quarto1 = new javax.swing.JPanel();
+        disponibilidade = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        nrQuarto = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tipo = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        preco = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        hospedeInf = new javax.swing.JLabel();
+        dataSaidaInf = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        outButton = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        inButton = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        editButton = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
         quarto2 = new javax.swing.JPanel();
+        disponibilidade6 = new javax.swing.JPanel();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel47 = new javax.swing.JLabel();
+        nrQuarto6 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        tipo6 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        status6 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
+        preco6 = new javax.swing.JLabel();
+        jPanel24 = new javax.swing.JPanel();
+        hospedeInf6 = new javax.swing.JLabel();
+        dataSaidaInf6 = new javax.swing.JLabel();
+        jPanel25 = new javax.swing.JPanel();
+        outButton6 = new javax.swing.JPanel();
+        jLabel51 = new javax.swing.JLabel();
+        inButton6 = new javax.swing.JPanel();
+        jLabel52 = new javax.swing.JLabel();
+        editButton6 = new javax.swing.JPanel();
+        jLabel53 = new javax.swing.JLabel();
         quarto3 = new javax.swing.JPanel();
+        disponibilidade7 = new javax.swing.JPanel();
+        jPanel26 = new javax.swing.JPanel();
+        jLabel54 = new javax.swing.JLabel();
+        nrQuarto7 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        tipo7 = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
+        status7 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        preco7 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        hospedeInf7 = new javax.swing.JLabel();
+        dataSaidaInf7 = new javax.swing.JLabel();
+        jPanel28 = new javax.swing.JPanel();
+        outButton7 = new javax.swing.JPanel();
+        jLabel58 = new javax.swing.JLabel();
+        inButton7 = new javax.swing.JPanel();
+        jLabel59 = new javax.swing.JLabel();
+        editButton7 = new javax.swing.JPanel();
+        jLabel60 = new javax.swing.JLabel();
         quarto4 = new javax.swing.JPanel();
+        disponibilidade8 = new javax.swing.JPanel();
+        jPanel29 = new javax.swing.JPanel();
+        jLabel61 = new javax.swing.JLabel();
+        nrQuarto8 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        tipo8 = new javax.swing.JLabel();
+        jLabel63 = new javax.swing.JLabel();
+        status8 = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        preco8 = new javax.swing.JLabel();
+        jPanel30 = new javax.swing.JPanel();
+        hospedeInf8 = new javax.swing.JLabel();
+        dataSaidaInf8 = new javax.swing.JLabel();
+        jPanel31 = new javax.swing.JPanel();
+        outButton8 = new javax.swing.JPanel();
+        jLabel65 = new javax.swing.JLabel();
+        inButton8 = new javax.swing.JPanel();
+        jLabel66 = new javax.swing.JLabel();
+        editButton8 = new javax.swing.JPanel();
+        jLabel67 = new javax.swing.JLabel();
         quarto5 = new javax.swing.JPanel();
+        disponibilidade9 = new javax.swing.JPanel();
+        jPanel32 = new javax.swing.JPanel();
+        jLabel68 = new javax.swing.JLabel();
+        nrQuarto9 = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        tipo9 = new javax.swing.JLabel();
+        jLabel70 = new javax.swing.JLabel();
+        status9 = new javax.swing.JLabel();
+        jLabel71 = new javax.swing.JLabel();
+        preco9 = new javax.swing.JLabel();
+        jPanel33 = new javax.swing.JPanel();
+        hospedeInf9 = new javax.swing.JLabel();
+        dataSaidaInf9 = new javax.swing.JLabel();
+        jPanel34 = new javax.swing.JPanel();
+        outButton9 = new javax.swing.JPanel();
+        jLabel72 = new javax.swing.JLabel();
+        inButton9 = new javax.swing.JPanel();
+        jLabel73 = new javax.swing.JLabel();
+        editButton9 = new javax.swing.JPanel();
+        jLabel74 = new javax.swing.JLabel();
         quarto6 = new javax.swing.JPanel();
+        disponibilidade10 = new javax.swing.JPanel();
+        jPanel35 = new javax.swing.JPanel();
+        jLabel75 = new javax.swing.JLabel();
+        nrQuarto10 = new javax.swing.JLabel();
+        jLabel76 = new javax.swing.JLabel();
+        tipo10 = new javax.swing.JLabel();
+        jLabel77 = new javax.swing.JLabel();
+        status10 = new javax.swing.JLabel();
+        jLabel78 = new javax.swing.JLabel();
+        preco10 = new javax.swing.JLabel();
+        jPanel36 = new javax.swing.JPanel();
+        hospedeInf10 = new javax.swing.JLabel();
+        dataSaidaInf10 = new javax.swing.JLabel();
+        jPanel37 = new javax.swing.JPanel();
+        outButton10 = new javax.swing.JPanel();
+        jLabel79 = new javax.swing.JLabel();
+        inButton10 = new javax.swing.JPanel();
+        jLabel80 = new javax.swing.JLabel();
+        editButton10 = new javax.swing.JPanel();
+        jLabel81 = new javax.swing.JLabel();
         quarto7 = new javax.swing.JPanel();
+        disponibilidade11 = new javax.swing.JPanel();
+        jPanel38 = new javax.swing.JPanel();
+        jLabel82 = new javax.swing.JLabel();
+        nrQuarto11 = new javax.swing.JLabel();
+        jLabel83 = new javax.swing.JLabel();
+        tipo11 = new javax.swing.JLabel();
+        jLabel84 = new javax.swing.JLabel();
+        status11 = new javax.swing.JLabel();
+        jLabel85 = new javax.swing.JLabel();
+        preco11 = new javax.swing.JLabel();
+        jPanel39 = new javax.swing.JPanel();
+        hospedeInf11 = new javax.swing.JLabel();
+        dataSaidaInf11 = new javax.swing.JLabel();
+        jPanel40 = new javax.swing.JPanel();
+        outButton11 = new javax.swing.JPanel();
+        jLabel86 = new javax.swing.JLabel();
+        inButton11 = new javax.swing.JPanel();
+        jLabel87 = new javax.swing.JLabel();
+        editButton11 = new javax.swing.JPanel();
+        jLabel88 = new javax.swing.JLabel();
         quarto8 = new javax.swing.JPanel();
+        disponibilidade12 = new javax.swing.JPanel();
+        jPanel41 = new javax.swing.JPanel();
+        jLabel89 = new javax.swing.JLabel();
+        nrQuarto12 = new javax.swing.JLabel();
+        jLabel90 = new javax.swing.JLabel();
+        tipo12 = new javax.swing.JLabel();
+        jLabel91 = new javax.swing.JLabel();
+        status12 = new javax.swing.JLabel();
+        jLabel92 = new javax.swing.JLabel();
+        preco12 = new javax.swing.JLabel();
+        jPanel42 = new javax.swing.JPanel();
+        hospedeInf12 = new javax.swing.JLabel();
+        dataSaidaInf12 = new javax.swing.JLabel();
+        jPanel43 = new javax.swing.JPanel();
+        outButton12 = new javax.swing.JPanel();
+        jLabel93 = new javax.swing.JLabel();
+        inButton12 = new javax.swing.JPanel();
+        jLabel94 = new javax.swing.JLabel();
+        editButton12 = new javax.swing.JPanel();
+        jLabel95 = new javax.swing.JLabel();
         quarto9 = new javax.swing.JPanel();
+        disponibilidade13 = new javax.swing.JPanel();
+        jPanel44 = new javax.swing.JPanel();
+        jLabel96 = new javax.swing.JLabel();
+        nrQuarto13 = new javax.swing.JLabel();
+        jLabel97 = new javax.swing.JLabel();
+        tipo13 = new javax.swing.JLabel();
+        jLabel98 = new javax.swing.JLabel();
+        status13 = new javax.swing.JLabel();
+        jLabel99 = new javax.swing.JLabel();
+        preco13 = new javax.swing.JLabel();
+        jPanel45 = new javax.swing.JPanel();
+        hospedeInf13 = new javax.swing.JLabel();
+        dataSaidaInf13 = new javax.swing.JLabel();
+        jPanel46 = new javax.swing.JPanel();
+        outButton13 = new javax.swing.JPanel();
+        jLabel100 = new javax.swing.JLabel();
+        inButton13 = new javax.swing.JPanel();
+        jLabel101 = new javax.swing.JLabel();
+        editButton13 = new javax.swing.JPanel();
+        jLabel102 = new javax.swing.JLabel();
         quarto10 = new javax.swing.JPanel();
+        disponibilidade14 = new javax.swing.JPanel();
+        jPanel47 = new javax.swing.JPanel();
+        jLabel103 = new javax.swing.JLabel();
+        nrQuarto14 = new javax.swing.JLabel();
+        jLabel104 = new javax.swing.JLabel();
+        tipo14 = new javax.swing.JLabel();
+        jLabel105 = new javax.swing.JLabel();
+        status14 = new javax.swing.JLabel();
+        jLabel106 = new javax.swing.JLabel();
+        preco14 = new javax.swing.JLabel();
+        jPanel48 = new javax.swing.JPanel();
+        hospedeInf14 = new javax.swing.JLabel();
+        dataSaidaInf14 = new javax.swing.JLabel();
+        jPanel49 = new javax.swing.JPanel();
+        outButton14 = new javax.swing.JPanel();
+        jLabel107 = new javax.swing.JLabel();
+        inButton14 = new javax.swing.JPanel();
+        jLabel108 = new javax.swing.JLabel();
+        editButton14 = new javax.swing.JPanel();
+        jLabel109 = new javax.swing.JLabel();
         quarto11 = new javax.swing.JPanel();
+        disponibilidade1 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        nrQuarto1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        tipo1 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        status1 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        preco1 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        hospedeInf1 = new javax.swing.JLabel();
+        dataSaidaInf1 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        outButton1 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        inButton1 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        editButton1 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
         quarto12 = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        nrQuarto4 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        tipo4 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        status4 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        preco4 = new javax.swing.JLabel();
+        disponibilidade4 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        outButton4 = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        inButton4 = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        editButton4 = new javax.swing.JPanel();
+        jLabel39 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        hospedeInf4 = new javax.swing.JLabel();
+        dataSaidaInf4 = new javax.swing.JLabel();
         quarto13 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel40 = new javax.swing.JLabel();
+        nrQuarto5 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        tipo5 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        status5 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        preco5 = new javax.swing.JLabel();
+        disponibilidade5 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        outButton5 = new javax.swing.JPanel();
+        jLabel44 = new javax.swing.JLabel();
+        inButton5 = new javax.swing.JPanel();
+        jLabel45 = new javax.swing.JLabel();
+        editButton5 = new javax.swing.JPanel();
+        jLabel46 = new javax.swing.JLabel();
+        jPanel22 = new javax.swing.JPanel();
+        hospedeInf5 = new javax.swing.JLabel();
+        dataSaidaInf5 = new javax.swing.JLabel();
         quarto14 = new javax.swing.JPanel();
+        disponibilidade2 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        nrQuarto2 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        tipo2 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        status2 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        preco2 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        hospedeInf2 = new javax.swing.JLabel();
+        dataSaidaInf2 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        outButton2 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        inButton2 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        editButton2 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
         quarto15 = new javax.swing.JPanel();
+        disponibilidade3 = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        nrQuarto3 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        tipo3 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        status3 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        preco3 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        hospedeInf3 = new javax.swing.JLabel();
+        dataSaidaInf3 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        outButton3 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        inButton3 = new javax.swing.JPanel();
+        jLabel31 = new javax.swing.JLabel();
+        editButton3 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setBorder(null);
+        setEnabled(false);
         setPreferredSize(new java.awt.Dimension(895, 665));
 
         HomeConteiner.setPreferredSize(new java.awt.Dimension(901, 50));
@@ -128,231 +481,3927 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel8);
 
-        jPanel9.setBackground(new java.awt.Color(0,0,0,1));
-        jPanel9.setPreferredSize(new java.awt.Dimension(156, 30));
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setFont(new java.awt.Font("Serif", 0, 17)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/GreyCircle.png"))); // NOI18N
-        jLabel7.setText("Em Manutencao");
-        jPanel9.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, -1));
-
-        jPanel1.add(jPanel9);
-
         HomeConteiner.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         PainelQuartos.setBackground(new Color(0,0,0,1));
         PainelQuartos.setPreferredSize(new java.awt.Dimension(895, 665));
 
-        quarto1.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto1.setBackground(new java.awt.Color(0,0,0,50));
         quarto1.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto1Layout = new javax.swing.GroupLayout(quarto1);
-        quarto1.setLayout(quarto1Layout);
-        quarto1Layout.setHorizontalGroup(
-            quarto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade.setBackground(new java.awt.Color(95, 241, 95));
+        Thread thread = new Thread(runable);
+        thread.setDaemon(true);
+        thread.start();
+        try {
+            sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PainelQuartos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidadeLayout = new javax.swing.GroupLayout(disponibilidade);
+        disponibilidade.setLayout(disponibilidadeLayout);
+        disponibilidadeLayout.setHorizontalGroup(
+            disponibilidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto1Layout.setVerticalGroup(
-            quarto1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidadeLayout.setVerticalGroup(
+            disponibilidadeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto2.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto1.add(disponibilidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel5.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel5.add(jLabel1, gridBagConstraints);
+
+        nrQuarto.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto.setText(new QuartoDAO().findById(6).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel5.add(nrQuarto, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel5.add(jLabel2, gridBagConstraints);
+
+        tipo.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo.setForeground(new java.awt.Color(255, 255, 255));
+        tipo.setText(new QuartoDAO().findById(6).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel5.add(tipo, gridBagConstraints);
+
+        jLabel8.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel5.add(jLabel8, gridBagConstraints);
+
+        status.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status.setForeground(new java.awt.Color(255, 255, 255));
+        status.setText(new QuartoDAO().findById(6).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel5.add(status, gridBagConstraints);
+
+        jLabel9.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel5.add(jLabel9, gridBagConstraints);
+
+        preco.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco.setForeground(new java.awt.Color(255, 255, 255));
+        preco.setText(String.valueOf(new QuartoDAO().findById(6).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel5.add(preco, gridBagConstraints);
+
+        quarto1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel10.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf.setForeground(new java.awt.Color(255, 255, 255));
+        String hospede=" ";
+        String dataSaidaI=" ";
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==1){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    if(listaH.get(i).getHospede()!=null){
+                        hospede=listaH.get(i).getHospede().getNome()+" "
+                        +listaH.get(i).getHospede().getApelido()+" "
+                        +listaH.get(i).getHospede().getTelefone();
+                        dataSaidaI=listaH.get(i).getDataSaida();
+                    }
+                    else{
+                        Reservas res = listaH.get(i).getReserva();
+                        hospede=res.getHospede().getNome()+" "
+                        +res.getHospede().getApelido()+" "
+                        +listaH.get(i).getHospede().getTelefone();
+                    }
+                }
+            }
+
+        }
+        hospedeInf.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel10.add(hospedeInf);
+
+        dataSaidaInf.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf.setText(" ");
+        Thread thread1 = new Thread(runnable);
+        thread1.setDaemon(true);
+        thread1.start();
+        try {
+            sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PainelQuartos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jPanel10.add(dataSaidaInf);
+
+        quarto1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButtonMouseExited(evt);
+            }
+        });
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButtonLayout = new javax.swing.GroupLayout(outButton);
+        outButton.setLayout(outButtonLayout);
+        outButtonLayout.setHorizontalGroup(
+            outButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButtonLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel19)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButtonLayout.setVerticalGroup(
+            outButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButtonLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel19)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButtonMouseExited(evt);
+            }
+        });
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButtonLayout = new javax.swing.GroupLayout(inButton);
+        inButton.setLayout(inButtonLayout);
+        inButtonLayout.setHorizontalGroup(
+            inButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButtonLayout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButtonLayout.setVerticalGroup(
+            inButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButtonLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel20))
+        );
+
+        editButton.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButtonMouseExited(evt);
+            }
+        });
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButtonLayout = new javax.swing.GroupLayout(editButton);
+        editButton.setLayout(editButtonLayout);
+        editButtonLayout.setHorizontalGroup(
+            editButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButtonLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel21)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButtonLayout.setVerticalGroup(
+            editButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButtonLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel21)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(inButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto2.setBackground(new java.awt.Color(0,0,0,50));
         quarto2.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto2Layout = new javax.swing.GroupLayout(quarto2);
-        quarto2.setLayout(quarto2Layout);
-        quarto2Layout.setHorizontalGroup(
-            quarto2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade6.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade6Layout = new javax.swing.GroupLayout(disponibilidade6);
+        disponibilidade6.setLayout(disponibilidade6Layout);
+        disponibilidade6Layout.setHorizontalGroup(
+            disponibilidade6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto2Layout.setVerticalGroup(
-            quarto2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade6Layout.setVerticalGroup(
+            disponibilidade6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto3.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto2.add(disponibilidade6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel23.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel23.setLayout(new java.awt.GridBagLayout());
+
+        jLabel47.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel47.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel23.add(jLabel47, gridBagConstraints);
+
+        nrQuarto6.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto6.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto6.setText(new QuartoDAO().findById(7).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel23.add(nrQuarto6, gridBagConstraints);
+
+        jLabel48.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel48.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel23.add(jLabel48, gridBagConstraints);
+
+        tipo6.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo6.setForeground(new java.awt.Color(255, 255, 255));
+        tipo6.setText(new QuartoDAO().findById(7).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel23.add(tipo6, gridBagConstraints);
+
+        jLabel49.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel49.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel23.add(jLabel49, gridBagConstraints);
+
+        status6.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status6.setForeground(new java.awt.Color(255, 255, 255));
+        status6.setText(new QuartoDAO().findById(7).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel23.add(status6, gridBagConstraints);
+
+        jLabel50.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel50.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel23.add(jLabel50, gridBagConstraints);
+
+        preco6.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco6.setForeground(new java.awt.Color(255, 255, 255));
+        preco6.setText(String.valueOf(new QuartoDAO().findById(7).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel23.add(preco6, gridBagConstraints);
+
+        quarto2.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel24.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf6.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf6.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf6.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel24.add(hospedeInf6);
+
+        dataSaidaInf6.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf6.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf6.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel24.add(dataSaidaInf6);
+
+        quarto2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel25.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton6.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton6MouseExited(evt);
+            }
+        });
+
+        jLabel51.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton6Layout = new javax.swing.GroupLayout(outButton6);
+        outButton6.setLayout(outButton6Layout);
+        outButton6Layout.setHorizontalGroup(
+            outButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton6Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel51)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton6Layout.setVerticalGroup(
+            outButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton6Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel51)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton6.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton6MouseExited(evt);
+            }
+        });
+
+        jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton6Layout = new javax.swing.GroupLayout(inButton6);
+        inButton6.setLayout(inButton6Layout);
+        inButton6Layout.setHorizontalGroup(
+            inButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton6Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton6Layout.setVerticalGroup(
+            inButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton6Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel52))
+        );
+
+        editButton6.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton6MouseExited(evt);
+            }
+        });
+
+        jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton6Layout = new javax.swing.GroupLayout(editButton6);
+        editButton6.setLayout(editButton6Layout);
+        editButton6Layout.setHorizontalGroup(
+            editButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton6Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel53)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton6Layout.setVerticalGroup(
+            editButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton6Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel53)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
+        jPanel25.setLayout(jPanel25Layout);
+        jPanel25Layout.setHorizontalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel25Layout.createSequentialGroup()
+                .addComponent(inButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel25Layout.setVerticalGroup(
+            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel25Layout.createSequentialGroup()
+                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto2.add(jPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto3.setBackground(new java.awt.Color(0,0,0,50));
         quarto3.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto3Layout = new javax.swing.GroupLayout(quarto3);
-        quarto3.setLayout(quarto3Layout);
-        quarto3Layout.setHorizontalGroup(
-            quarto3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade7.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade7Layout = new javax.swing.GroupLayout(disponibilidade7);
+        disponibilidade7.setLayout(disponibilidade7Layout);
+        disponibilidade7Layout.setHorizontalGroup(
+            disponibilidade7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto3Layout.setVerticalGroup(
-            quarto3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade7Layout.setVerticalGroup(
+            disponibilidade7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto4.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto3.add(disponibilidade7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel26.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel26.setLayout(new java.awt.GridBagLayout());
+
+        jLabel54.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel54.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel54.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel26.add(jLabel54, gridBagConstraints);
+
+        nrQuarto7.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto7.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto7.setText(new QuartoDAO().findById(8).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel26.add(nrQuarto7, gridBagConstraints);
+
+        jLabel55.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel55.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel55.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel26.add(jLabel55, gridBagConstraints);
+
+        tipo7.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo7.setForeground(new java.awt.Color(255, 255, 255));
+        tipo7.setText(new QuartoDAO().findById(8).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel26.add(tipo7, gridBagConstraints);
+
+        jLabel56.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel56.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel56.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel26.add(jLabel56, gridBagConstraints);
+
+        status7.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status7.setForeground(new java.awt.Color(255, 255, 255));
+        status7.setText(new QuartoDAO().findById(8).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel26.add(status7, gridBagConstraints);
+
+        jLabel57.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel57.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel57.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel26.add(jLabel57, gridBagConstraints);
+
+        preco7.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco7.setForeground(new java.awt.Color(255, 255, 255));
+        preco7.setText(String.valueOf(new QuartoDAO().findById(8).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel26.add(preco7, gridBagConstraints);
+
+        quarto3.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel27.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf7.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf7.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf7.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel27.add(hospedeInf7);
+
+        dataSaidaInf7.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf7.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf7.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel27.add(dataSaidaInf7);
+
+        quarto3.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel28.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton7.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton7MouseExited(evt);
+            }
+        });
+
+        jLabel58.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton7Layout = new javax.swing.GroupLayout(outButton7);
+        outButton7.setLayout(outButton7Layout);
+        outButton7Layout.setHorizontalGroup(
+            outButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton7Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel58)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton7Layout.setVerticalGroup(
+            outButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton7Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel58)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton7.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton7MouseExited(evt);
+            }
+        });
+
+        jLabel59.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton7Layout = new javax.swing.GroupLayout(inButton7);
+        inButton7.setLayout(inButton7Layout);
+        inButton7Layout.setHorizontalGroup(
+            inButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton7Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton7Layout.setVerticalGroup(
+            inButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton7Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel59))
+        );
+
+        editButton7.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton7MouseExited(evt);
+            }
+        });
+
+        jLabel60.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton7Layout = new javax.swing.GroupLayout(editButton7);
+        editButton7.setLayout(editButton7Layout);
+        editButton7Layout.setHorizontalGroup(
+            editButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton7Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel60)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton7Layout.setVerticalGroup(
+            editButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton7Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel60)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
+        jPanel28.setLayout(jPanel28Layout);
+        jPanel28Layout.setHorizontalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel28Layout.createSequentialGroup()
+                .addComponent(inButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel28Layout.setVerticalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel28Layout.createSequentialGroup()
+                .addGroup(jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto3.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto4.setBackground(new java.awt.Color(0,0,0,50));
         quarto4.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto4Layout = new javax.swing.GroupLayout(quarto4);
-        quarto4.setLayout(quarto4Layout);
-        quarto4Layout.setHorizontalGroup(
-            quarto4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade8.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade8Layout = new javax.swing.GroupLayout(disponibilidade8);
+        disponibilidade8.setLayout(disponibilidade8Layout);
+        disponibilidade8Layout.setHorizontalGroup(
+            disponibilidade8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto4Layout.setVerticalGroup(
-            quarto4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade8Layout.setVerticalGroup(
+            disponibilidade8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto5.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto4.add(disponibilidade8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel29.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel29.setLayout(new java.awt.GridBagLayout());
+
+        jLabel61.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel61.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel61.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel29.add(jLabel61, gridBagConstraints);
+
+        nrQuarto8.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto8.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto8.setText(new QuartoDAO().findById(9).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel29.add(nrQuarto8, gridBagConstraints);
+
+        jLabel62.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel62.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel62.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel29.add(jLabel62, gridBagConstraints);
+
+        tipo8.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo8.setForeground(new java.awt.Color(255, 255, 255));
+        tipo8.setText(new QuartoDAO().findById(9).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel29.add(tipo8, gridBagConstraints);
+
+        jLabel63.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel63.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel63.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel29.add(jLabel63, gridBagConstraints);
+
+        status8.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status8.setForeground(new java.awt.Color(255, 255, 255));
+        status8.setText(new QuartoDAO().findById(9).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel29.add(status8, gridBagConstraints);
+
+        jLabel64.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel64.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel64.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel29.add(jLabel64, gridBagConstraints);
+
+        preco8.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco8.setForeground(new java.awt.Color(255, 255, 255));
+        preco8.setText(String.valueOf(new QuartoDAO().findById(9).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel29.add(preco8, gridBagConstraints);
+
+        quarto4.add(jPanel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel30.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf8.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf8.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf8.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel30.add(hospedeInf8);
+
+        dataSaidaInf8.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf8.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf8.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel30.add(dataSaidaInf8);
+
+        quarto4.add(jPanel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel31.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton8.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton8MouseExited(evt);
+            }
+        });
+
+        jLabel65.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton8Layout = new javax.swing.GroupLayout(outButton8);
+        outButton8.setLayout(outButton8Layout);
+        outButton8Layout.setHorizontalGroup(
+            outButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton8Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel65)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton8Layout.setVerticalGroup(
+            outButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton8Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel65)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton8.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton8MouseExited(evt);
+            }
+        });
+
+        jLabel66.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton8Layout = new javax.swing.GroupLayout(inButton8);
+        inButton8.setLayout(inButton8Layout);
+        inButton8Layout.setHorizontalGroup(
+            inButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton8Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel66, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton8Layout.setVerticalGroup(
+            inButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton8Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel66))
+        );
+
+        editButton8.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton8MouseExited(evt);
+            }
+        });
+
+        jLabel67.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton8Layout = new javax.swing.GroupLayout(editButton8);
+        editButton8.setLayout(editButton8Layout);
+        editButton8Layout.setHorizontalGroup(
+            editButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton8Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel67)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton8Layout.setVerticalGroup(
+            editButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton8Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel67)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel31Layout = new javax.swing.GroupLayout(jPanel31);
+        jPanel31.setLayout(jPanel31Layout);
+        jPanel31Layout.setHorizontalGroup(
+            jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel31Layout.createSequentialGroup()
+                .addComponent(inButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel31Layout.setVerticalGroup(
+            jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel31Layout.createSequentialGroup()
+                .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto4.add(jPanel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto5.setBackground(new java.awt.Color(0,0,0,50));
         quarto5.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto5Layout = new javax.swing.GroupLayout(quarto5);
-        quarto5.setLayout(quarto5Layout);
-        quarto5Layout.setHorizontalGroup(
-            quarto5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade9.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade9Layout = new javax.swing.GroupLayout(disponibilidade9);
+        disponibilidade9.setLayout(disponibilidade9Layout);
+        disponibilidade9Layout.setHorizontalGroup(
+            disponibilidade9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto5Layout.setVerticalGroup(
-            quarto5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade9Layout.setVerticalGroup(
+            disponibilidade9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto6.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto5.add(disponibilidade9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel32.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel32.setLayout(new java.awt.GridBagLayout());
+
+        jLabel68.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel68.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel68.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel32.add(jLabel68, gridBagConstraints);
+
+        nrQuarto9.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto9.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto9.setText(new QuartoDAO().findById(10).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel32.add(nrQuarto9, gridBagConstraints);
+
+        jLabel69.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel69.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel69.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel32.add(jLabel69, gridBagConstraints);
+
+        tipo9.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo9.setForeground(new java.awt.Color(255, 255, 255));
+        tipo9.setText(new QuartoDAO().findById(10).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel32.add(tipo9, gridBagConstraints);
+
+        jLabel70.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel70.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel70.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel32.add(jLabel70, gridBagConstraints);
+
+        status9.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status9.setForeground(new java.awt.Color(255, 255, 255));
+        status9.setText(new QuartoDAO().findById(10).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel32.add(status9, gridBagConstraints);
+
+        jLabel71.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel71.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel71.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel32.add(jLabel71, gridBagConstraints);
+
+        preco9.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco9.setForeground(new java.awt.Color(255, 255, 255));
+        preco9.setText(String.valueOf(new QuartoDAO().findById(10).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel32.add(preco9, gridBagConstraints);
+
+        quarto5.add(jPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel33.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf9.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf9.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf9.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel33.add(hospedeInf9);
+
+        dataSaidaInf9.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf9.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf9.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel33.add(dataSaidaInf9);
+
+        quarto5.add(jPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel34.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton9.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton9MouseExited(evt);
+            }
+        });
+
+        jLabel72.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton9Layout = new javax.swing.GroupLayout(outButton9);
+        outButton9.setLayout(outButton9Layout);
+        outButton9Layout.setHorizontalGroup(
+            outButton9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton9Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel72)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton9Layout.setVerticalGroup(
+            outButton9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton9Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel72)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton9.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton9MouseExited(evt);
+            }
+        });
+
+        jLabel73.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton9Layout = new javax.swing.GroupLayout(inButton9);
+        inButton9.setLayout(inButton9Layout);
+        inButton9Layout.setHorizontalGroup(
+            inButton9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton9Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel73, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton9Layout.setVerticalGroup(
+            inButton9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton9Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel73))
+        );
+
+        editButton9.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton9MouseExited(evt);
+            }
+        });
+
+        jLabel74.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton9Layout = new javax.swing.GroupLayout(editButton9);
+        editButton9.setLayout(editButton9Layout);
+        editButton9Layout.setHorizontalGroup(
+            editButton9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton9Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel74)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton9Layout.setVerticalGroup(
+            editButton9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton9Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel74)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
+        jPanel34.setLayout(jPanel34Layout);
+        jPanel34Layout.setHorizontalGroup(
+            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel34Layout.createSequentialGroup()
+                .addComponent(inButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel34Layout.setVerticalGroup(
+            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel34Layout.createSequentialGroup()
+                .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto5.add(jPanel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto6.setBackground(new java.awt.Color(0,0,0,50));
         quarto6.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto6Layout = new javax.swing.GroupLayout(quarto6);
-        quarto6.setLayout(quarto6Layout);
-        quarto6Layout.setHorizontalGroup(
-            quarto6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade10.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade10Layout = new javax.swing.GroupLayout(disponibilidade10);
+        disponibilidade10.setLayout(disponibilidade10Layout);
+        disponibilidade10Layout.setHorizontalGroup(
+            disponibilidade10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto6Layout.setVerticalGroup(
-            quarto6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade10Layout.setVerticalGroup(
+            disponibilidade10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto7.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto6.add(disponibilidade10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel35.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel35.setLayout(new java.awt.GridBagLayout());
+
+        jLabel75.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel75.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel75.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel35.add(jLabel75, gridBagConstraints);
+
+        nrQuarto10.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto10.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto10.setText(new QuartoDAO().findById(11).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel35.add(nrQuarto10, gridBagConstraints);
+
+        jLabel76.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel76.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel76.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel35.add(jLabel76, gridBagConstraints);
+
+        tipo10.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo10.setForeground(new java.awt.Color(255, 255, 255));
+        tipo10.setText(new QuartoDAO().findById(11).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel35.add(tipo10, gridBagConstraints);
+
+        jLabel77.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel77.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel77.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel35.add(jLabel77, gridBagConstraints);
+
+        status10.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status10.setForeground(new java.awt.Color(255, 255, 255));
+        status10.setText(new QuartoDAO().findById(11).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel35.add(status10, gridBagConstraints);
+
+        jLabel78.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel78.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel78.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel35.add(jLabel78, gridBagConstraints);
+
+        preco10.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco10.setForeground(new java.awt.Color(255, 255, 255));
+        preco10.setText(String.valueOf(new QuartoDAO().findById(11).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel35.add(preco10, gridBagConstraints);
+
+        quarto6.add(jPanel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel36.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf10.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf10.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf10.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel36.add(hospedeInf10);
+
+        dataSaidaInf10.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf10.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf10.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel36.add(dataSaidaInf10);
+
+        quarto6.add(jPanel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel37.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton10.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton10MouseExited(evt);
+            }
+        });
+
+        jLabel79.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton10Layout = new javax.swing.GroupLayout(outButton10);
+        outButton10.setLayout(outButton10Layout);
+        outButton10Layout.setHorizontalGroup(
+            outButton10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton10Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel79)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton10Layout.setVerticalGroup(
+            outButton10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton10Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel79)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton10.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton10MouseExited(evt);
+            }
+        });
+
+        jLabel80.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton10Layout = new javax.swing.GroupLayout(inButton10);
+        inButton10.setLayout(inButton10Layout);
+        inButton10Layout.setHorizontalGroup(
+            inButton10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton10Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton10Layout.setVerticalGroup(
+            inButton10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton10Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel80))
+        );
+
+        editButton10.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton10MouseExited(evt);
+            }
+        });
+
+        jLabel81.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton10Layout = new javax.swing.GroupLayout(editButton10);
+        editButton10.setLayout(editButton10Layout);
+        editButton10Layout.setHorizontalGroup(
+            editButton10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton10Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel81)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton10Layout.setVerticalGroup(
+            editButton10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton10Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel81)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
+        jPanel37.setLayout(jPanel37Layout);
+        jPanel37Layout.setHorizontalGroup(
+            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel37Layout.createSequentialGroup()
+                .addComponent(inButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel37Layout.setVerticalGroup(
+            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel37Layout.createSequentialGroup()
+                .addGroup(jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto6.add(jPanel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto7.setBackground(new java.awt.Color(0,0,0,50));
         quarto7.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto7Layout = new javax.swing.GroupLayout(quarto7);
-        quarto7.setLayout(quarto7Layout);
-        quarto7Layout.setHorizontalGroup(
-            quarto7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade11.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade11Layout = new javax.swing.GroupLayout(disponibilidade11);
+        disponibilidade11.setLayout(disponibilidade11Layout);
+        disponibilidade11Layout.setHorizontalGroup(
+            disponibilidade11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto7Layout.setVerticalGroup(
-            quarto7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade11Layout.setVerticalGroup(
+            disponibilidade11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto8.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto7.add(disponibilidade11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel38.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel38.setLayout(new java.awt.GridBagLayout());
+
+        jLabel82.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel82.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel82.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel38.add(jLabel82, gridBagConstraints);
+
+        nrQuarto11.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto11.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto11.setText(new QuartoDAO().findById(12).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel38.add(nrQuarto11, gridBagConstraints);
+
+        jLabel83.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel83.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel83.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel38.add(jLabel83, gridBagConstraints);
+
+        tipo11.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo11.setForeground(new java.awt.Color(255, 255, 255));
+        tipo11.setText(new QuartoDAO().findById(12).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel38.add(tipo11, gridBagConstraints);
+
+        jLabel84.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel84.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel84.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel38.add(jLabel84, gridBagConstraints);
+
+        status11.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status11.setForeground(new java.awt.Color(255, 255, 255));
+        status11.setText(new QuartoDAO().findById(12).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel38.add(status11, gridBagConstraints);
+
+        jLabel85.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel85.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel85.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel38.add(jLabel85, gridBagConstraints);
+
+        preco11.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco11.setForeground(new java.awt.Color(255, 255, 255));
+        preco11.setText(String.valueOf(new QuartoDAO().findById(12).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel38.add(preco11, gridBagConstraints);
+
+        quarto7.add(jPanel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel39.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf11.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf11.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf11.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel39.add(hospedeInf11);
+
+        dataSaidaInf11.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf11.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf11.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel39.add(dataSaidaInf11);
+
+        quarto7.add(jPanel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel40.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton11.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton11MouseExited(evt);
+            }
+        });
+
+        jLabel86.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton11Layout = new javax.swing.GroupLayout(outButton11);
+        outButton11.setLayout(outButton11Layout);
+        outButton11Layout.setHorizontalGroup(
+            outButton11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton11Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel86)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton11Layout.setVerticalGroup(
+            outButton11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton11Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel86)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton11.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton11MouseExited(evt);
+            }
+        });
+
+        jLabel87.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton11Layout = new javax.swing.GroupLayout(inButton11);
+        inButton11.setLayout(inButton11Layout);
+        inButton11Layout.setHorizontalGroup(
+            inButton11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton11Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel87, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton11Layout.setVerticalGroup(
+            inButton11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton11Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel87))
+        );
+
+        editButton11.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton11MouseExited(evt);
+            }
+        });
+
+        jLabel88.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton11Layout = new javax.swing.GroupLayout(editButton11);
+        editButton11.setLayout(editButton11Layout);
+        editButton11Layout.setHorizontalGroup(
+            editButton11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton11Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel88)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton11Layout.setVerticalGroup(
+            editButton11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton11Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel88)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
+        jPanel40.setLayout(jPanel40Layout);
+        jPanel40Layout.setHorizontalGroup(
+            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel40Layout.createSequentialGroup()
+                .addComponent(inButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel40Layout.setVerticalGroup(
+            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel40Layout.createSequentialGroup()
+                .addGroup(jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto7.add(jPanel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto8.setBackground(new java.awt.Color(0,0,0,50));
         quarto8.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto8Layout = new javax.swing.GroupLayout(quarto8);
-        quarto8.setLayout(quarto8Layout);
-        quarto8Layout.setHorizontalGroup(
-            quarto8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade12.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade12Layout = new javax.swing.GroupLayout(disponibilidade12);
+        disponibilidade12.setLayout(disponibilidade12Layout);
+        disponibilidade12Layout.setHorizontalGroup(
+            disponibilidade12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto8Layout.setVerticalGroup(
-            quarto8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade12Layout.setVerticalGroup(
+            disponibilidade12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto9.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto8.add(disponibilidade12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel41.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel41.setLayout(new java.awt.GridBagLayout());
+
+        jLabel89.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel89.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel89.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel41.add(jLabel89, gridBagConstraints);
+
+        nrQuarto12.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto12.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto12.setText(new QuartoDAO().findById(13).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel41.add(nrQuarto12, gridBagConstraints);
+
+        jLabel90.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel90.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel90.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel41.add(jLabel90, gridBagConstraints);
+
+        tipo12.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo12.setForeground(new java.awt.Color(255, 255, 255));
+        tipo12.setText(new QuartoDAO().findById(13).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel41.add(tipo12, gridBagConstraints);
+
+        jLabel91.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel91.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel91.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel41.add(jLabel91, gridBagConstraints);
+
+        status12.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status12.setForeground(new java.awt.Color(255, 255, 255));
+        status12.setText(new QuartoDAO().findById(13).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel41.add(status12, gridBagConstraints);
+
+        jLabel92.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel92.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel92.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel41.add(jLabel92, gridBagConstraints);
+
+        preco12.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco12.setForeground(new java.awt.Color(255, 255, 255));
+        preco12.setText(String.valueOf(new QuartoDAO().findById(13).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel41.add(preco12, gridBagConstraints);
+
+        quarto8.add(jPanel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel42.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf12.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf12.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf12.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel42.add(hospedeInf12);
+
+        dataSaidaInf12.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf12.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf12.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel42.add(dataSaidaInf12);
+
+        quarto8.add(jPanel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel43.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton12.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton12MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton12MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton12MouseExited(evt);
+            }
+        });
+
+        jLabel93.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton12Layout = new javax.swing.GroupLayout(outButton12);
+        outButton12.setLayout(outButton12Layout);
+        outButton12Layout.setHorizontalGroup(
+            outButton12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton12Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel93)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton12Layout.setVerticalGroup(
+            outButton12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton12Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel93)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton12.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton12MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton12MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton12MouseExited(evt);
+            }
+        });
+
+        jLabel94.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton12Layout = new javax.swing.GroupLayout(inButton12);
+        inButton12.setLayout(inButton12Layout);
+        inButton12Layout.setHorizontalGroup(
+            inButton12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton12Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel94, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton12Layout.setVerticalGroup(
+            inButton12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton12Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel94))
+        );
+
+        editButton12.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton12MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton12MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton12MouseExited(evt);
+            }
+        });
+
+        jLabel95.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton12Layout = new javax.swing.GroupLayout(editButton12);
+        editButton12.setLayout(editButton12Layout);
+        editButton12Layout.setHorizontalGroup(
+            editButton12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton12Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel95)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton12Layout.setVerticalGroup(
+            editButton12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton12Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel95)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel43Layout = new javax.swing.GroupLayout(jPanel43);
+        jPanel43.setLayout(jPanel43Layout);
+        jPanel43Layout.setHorizontalGroup(
+            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel43Layout.createSequentialGroup()
+                .addComponent(inButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel43Layout.setVerticalGroup(
+            jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel43Layout.createSequentialGroup()
+                .addGroup(jPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto8.add(jPanel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto9.setBackground(new java.awt.Color(0,0,0,50));
         quarto9.setPreferredSize(new java.awt.Dimension(300, 250));
+
+        disponibilidade13.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade13Layout = new javax.swing.GroupLayout(disponibilidade13);
+        disponibilidade13.setLayout(disponibilidade13Layout);
+        disponibilidade13Layout.setHorizontalGroup(
+            disponibilidade13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        disponibilidade13Layout.setVerticalGroup(
+            disponibilidade13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel44.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel44.setLayout(new java.awt.GridBagLayout());
+
+        jLabel96.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel96.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel96.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel44.add(jLabel96, gridBagConstraints);
+
+        nrQuarto13.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto13.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto13.setText(new QuartoDAO().findById(14).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel44.add(nrQuarto13, gridBagConstraints);
+
+        jLabel97.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel97.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel97.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel44.add(jLabel97, gridBagConstraints);
+
+        tipo13.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo13.setForeground(new java.awt.Color(255, 255, 255));
+        tipo13.setText(new QuartoDAO().findById(14).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel44.add(tipo13, gridBagConstraints);
+
+        jLabel98.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel98.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel98.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel44.add(jLabel98, gridBagConstraints);
+
+        status13.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status13.setForeground(new java.awt.Color(255, 255, 255));
+        status13.setText(new QuartoDAO().findById(14).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel44.add(status13, gridBagConstraints);
+
+        jLabel99.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel99.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel99.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel44.add(jLabel99, gridBagConstraints);
+
+        preco13.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco13.setForeground(new java.awt.Color(255, 255, 255));
+        preco13.setText(String.valueOf(new QuartoDAO().findById(14).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel44.add(preco13, gridBagConstraints);
+
+        jPanel45.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf13.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf13.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf13.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel45.add(hospedeInf13);
+
+        dataSaidaInf13.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf13.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf13.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel45.add(dataSaidaInf13);
+
+        jPanel46.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton13.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton13MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton13MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton13MouseExited(evt);
+            }
+        });
+
+        jLabel100.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton13Layout = new javax.swing.GroupLayout(outButton13);
+        outButton13.setLayout(outButton13Layout);
+        outButton13Layout.setHorizontalGroup(
+            outButton13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton13Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel100)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton13Layout.setVerticalGroup(
+            outButton13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton13Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel100)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton13.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton13MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton13MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton13MouseExited(evt);
+            }
+        });
+
+        jLabel101.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton13Layout = new javax.swing.GroupLayout(inButton13);
+        inButton13.setLayout(inButton13Layout);
+        inButton13Layout.setHorizontalGroup(
+            inButton13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton13Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel101, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton13Layout.setVerticalGroup(
+            inButton13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton13Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel101))
+        );
+
+        editButton13.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton13MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton13MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton13MouseExited(evt);
+            }
+        });
+
+        jLabel102.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton13Layout = new javax.swing.GroupLayout(editButton13);
+        editButton13.setLayout(editButton13Layout);
+        editButton13Layout.setHorizontalGroup(
+            editButton13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton13Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel102)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton13Layout.setVerticalGroup(
+            editButton13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton13Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel102)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel46Layout = new javax.swing.GroupLayout(jPanel46);
+        jPanel46.setLayout(jPanel46Layout);
+        jPanel46Layout.setHorizontalGroup(
+            jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel46Layout.createSequentialGroup()
+                .addComponent(inButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel46Layout.setVerticalGroup(
+            jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel46Layout.createSequentialGroup()
+                .addGroup(jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout quarto9Layout = new javax.swing.GroupLayout(quarto9);
         quarto9.setLayout(quarto9Layout);
         quarto9Layout.setHorizontalGroup(
             quarto9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(quarto9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto9Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(quarto9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(disponibilidade13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel44, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel46, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         quarto9Layout.setVerticalGroup(
             quarto9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(quarto9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto9Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(disponibilidade13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(1, 1, 1)
+                    .addGroup(quarto9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(quarto9Layout.createSequentialGroup()
+                            .addGap(149, 149, 149)
+                            .addComponent(jPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel44, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(3, 3, 3)
+                    .addComponent(jPanel46, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        quarto10.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto10.setBackground(new java.awt.Color(0,0,0,50));
         quarto10.setPreferredSize(new java.awt.Dimension(300, 250));
+
+        disponibilidade14.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread = new Thread(runable);
+        //thread.setDaemon(true);
+        //thread.start();
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade14Layout = new javax.swing.GroupLayout(disponibilidade14);
+        disponibilidade14.setLayout(disponibilidade14Layout);
+        disponibilidade14Layout.setHorizontalGroup(
+            disponibilidade14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        disponibilidade14Layout.setVerticalGroup(
+            disponibilidade14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel47.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel47.setLayout(new java.awt.GridBagLayout());
+
+        jLabel103.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel103.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel103.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel47.add(jLabel103, gridBagConstraints);
+
+        nrQuarto14.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto14.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto14.setText(new QuartoDAO().findById(15).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel47.add(nrQuarto14, gridBagConstraints);
+
+        jLabel104.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel104.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel104.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel47.add(jLabel104, gridBagConstraints);
+
+        tipo14.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo14.setForeground(new java.awt.Color(255, 255, 255));
+        tipo14.setText(new QuartoDAO().findById(15).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel47.add(tipo14, gridBagConstraints);
+
+        jLabel105.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel105.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel105.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel47.add(jLabel105, gridBagConstraints);
+
+        status14.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status14.setForeground(new java.awt.Color(255, 255, 255));
+        status14.setText(new QuartoDAO().findById(15).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel47.add(status14, gridBagConstraints);
+
+        jLabel106.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel106.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel106.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel47.add(jLabel106, gridBagConstraints);
+
+        preco14.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco14.setForeground(new java.awt.Color(255, 255, 255));
+        preco14.setText(String.valueOf(new QuartoDAO().findById(15).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel47.add(preco14, gridBagConstraints);
+
+        jPanel48.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf14.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf14.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf14.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel48.add(hospedeInf14);
+
+        dataSaidaInf14.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf14.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf14.setText(" ");
+        //Thread thread1 = new Thread(runnable);
+        //thread1.setDaemon(true);
+        //thread1.start();
+        jPanel48.add(dataSaidaInf14);
+
+        jPanel49.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton14.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton14MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton14MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton14MouseExited(evt);
+            }
+        });
+
+        jLabel107.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton14Layout = new javax.swing.GroupLayout(outButton14);
+        outButton14.setLayout(outButton14Layout);
+        outButton14Layout.setHorizontalGroup(
+            outButton14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton14Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel107)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton14Layout.setVerticalGroup(
+            outButton14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton14Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel107)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton14.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton14MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton14MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton14MouseExited(evt);
+            }
+        });
+
+        jLabel108.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton14Layout = new javax.swing.GroupLayout(inButton14);
+        inButton14.setLayout(inButton14Layout);
+        inButton14Layout.setHorizontalGroup(
+            inButton14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton14Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel108, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton14Layout.setVerticalGroup(
+            inButton14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton14Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel108))
+        );
+
+        editButton14.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton14MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton14MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton14MouseExited(evt);
+            }
+        });
+
+        jLabel109.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton14Layout = new javax.swing.GroupLayout(editButton14);
+        editButton14.setLayout(editButton14Layout);
+        editButton14Layout.setHorizontalGroup(
+            editButton14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton14Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel109)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton14Layout.setVerticalGroup(
+            editButton14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton14Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel109)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel49Layout = new javax.swing.GroupLayout(jPanel49);
+        jPanel49.setLayout(jPanel49Layout);
+        jPanel49Layout.setHorizontalGroup(
+            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel49Layout.createSequentialGroup()
+                .addComponent(inButton14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel49Layout.setVerticalGroup(
+            jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel49Layout.createSequentialGroup()
+                .addGroup(jPanel49Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout quarto10Layout = new javax.swing.GroupLayout(quarto10);
         quarto10.setLayout(quarto10Layout);
         quarto10Layout.setHorizontalGroup(
             quarto10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(quarto10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto10Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(quarto10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(disponibilidade14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel47, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel48, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel49, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         quarto10Layout.setVerticalGroup(
             quarto10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(quarto10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto10Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(disponibilidade14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(1, 1, 1)
+                    .addGroup(quarto10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel47, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(quarto10Layout.createSequentialGroup()
+                            .addGap(149, 149, 149)
+                            .addComponent(jPanel48, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(3, 3, 3)
+                    .addComponent(jPanel49, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        quarto11.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto11.setBackground(new java.awt.Color(0,0,0,50));
         quarto11.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto11Layout = new javax.swing.GroupLayout(quarto11);
-        quarto11.setLayout(quarto11Layout);
-        quarto11Layout.setHorizontalGroup(
-            quarto11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade1.setBackground(new java.awt.Color(95, 241, 95));
+        Thread thread01 = new Thread(runable);
+        thread01.setDaemon(true);
+        thread01.start();
+        try {
+            sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PainelQuartos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade1Layout = new javax.swing.GroupLayout(disponibilidade1);
+        disponibilidade1.setLayout(disponibilidade1Layout);
+        disponibilidade1Layout.setHorizontalGroup(
+            disponibilidade1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto11Layout.setVerticalGroup(
-            quarto11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade1Layout.setVerticalGroup(
+            disponibilidade1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto12.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto11.add(disponibilidade1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel6.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel6.setLayout(new java.awt.GridBagLayout());
+
+        jLabel7.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel6.add(jLabel7, gridBagConstraints);
+
+        nrQuarto1.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto1.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto1.setText(new QuartoDAO().findById(1).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel6.add(nrQuarto1, gridBagConstraints);
+
+        jLabel10.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel6.add(jLabel10, gridBagConstraints);
+
+        tipo1.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo1.setForeground(new java.awt.Color(255, 255, 255));
+        tipo1.setText(new QuartoDAO().findById(1).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel6.add(tipo1, gridBagConstraints);
+
+        jLabel11.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel6.add(jLabel11, gridBagConstraints);
+
+        status1.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status1.setForeground(new java.awt.Color(255, 255, 255));
+        status1.setText(new QuartoDAO().findById(1).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel6.add(status1, gridBagConstraints);
+
+        jLabel12.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel6.add(jLabel12, gridBagConstraints);
+
+        preco1.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco1.setForeground(new java.awt.Color(255, 255, 255));
+        preco1.setText(String.valueOf(new QuartoDAO().findById(1).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel6.add(preco1, gridBagConstraints);
+
+        quarto11.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel11.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf1.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf1.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf1.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel11.add(hospedeInf1);
+
+        dataSaidaInf1.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf1.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf1.setText(" ");
+        Thread thread001 = new Thread(runnable);
+        thread001.setDaemon(true);
+        thread001.start();
+        try {
+            sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PainelQuartos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jPanel11.add(dataSaidaInf1);
+
+        quarto11.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel7.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton1.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton1MouseExited(evt);
+            }
+        });
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton1Layout = new javax.swing.GroupLayout(outButton1);
+        outButton1.setLayout(outButton1Layout);
+        outButton1Layout.setHorizontalGroup(
+            outButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel22)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton1Layout.setVerticalGroup(
+            outButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel22)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton1.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton1MouseExited(evt);
+            }
+        });
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton1Layout = new javax.swing.GroupLayout(inButton1);
+        inButton1.setLayout(inButton1Layout);
+        inButton1Layout.setHorizontalGroup(
+            inButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton1Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton1Layout.setVerticalGroup(
+            inButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel23))
+        );
+
+        editButton1.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton1MouseExited(evt);
+            }
+        });
+
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton1Layout = new javax.swing.GroupLayout(editButton1);
+        editButton1.setLayout(editButton1Layout);
+        editButton1Layout.setHorizontalGroup(
+            editButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel24)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton1Layout.setVerticalGroup(
+            editButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel24)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(inButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto11.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto12.setBackground(new java.awt.Color(0,0,0,50));
         quarto12.setPreferredSize(new java.awt.Dimension(300, 250));
+
+        jPanel17.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel17.setLayout(new java.awt.GridBagLayout());
+
+        jLabel33.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel17.add(jLabel33, gridBagConstraints);
+
+        nrQuarto4.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto4.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto4.setText(new QuartoDAO().findById(4).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel17.add(nrQuarto4, gridBagConstraints);
+
+        jLabel34.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel17.add(jLabel34, gridBagConstraints);
+
+        tipo4.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo4.setForeground(new java.awt.Color(255, 255, 255));
+        tipo4.setText(new QuartoDAO().findById(4).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel17.add(tipo4, gridBagConstraints);
+
+        jLabel35.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel17.add(jLabel35, gridBagConstraints);
+
+        status4.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status4.setForeground(new java.awt.Color(255, 255, 255));
+        status4.setText(new QuartoDAO().findById(4).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel17.add(status4, gridBagConstraints);
+
+        jLabel36.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel36.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel17.add(jLabel36, gridBagConstraints);
+
+        preco4.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco4.setForeground(new java.awt.Color(255, 255, 255));
+        preco4.setText(String.valueOf(new QuartoDAO().findById(4).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel17.add(preco4, gridBagConstraints);
+
+        disponibilidade4.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread01 = new Thread(runable);
+        //thread01.setDaemon(true);
+        //thread01.start();
+
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade4Layout = new javax.swing.GroupLayout(disponibilidade4);
+        disponibilidade4.setLayout(disponibilidade4Layout);
+        disponibilidade4Layout.setHorizontalGroup(
+            disponibilidade4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        disponibilidade4Layout.setVerticalGroup(
+            disponibilidade4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel18.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton4.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton4MouseExited(evt);
+            }
+        });
+
+        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton4Layout = new javax.swing.GroupLayout(outButton4);
+        outButton4.setLayout(outButton4Layout);
+        outButton4Layout.setHorizontalGroup(
+            outButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton4Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel37)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton4Layout.setVerticalGroup(
+            outButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton4Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel37)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton4.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton4MouseExited(evt);
+            }
+        });
+
+        jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton4Layout = new javax.swing.GroupLayout(inButton4);
+        inButton4.setLayout(inButton4Layout);
+        inButton4Layout.setHorizontalGroup(
+            inButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton4Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton4Layout.setVerticalGroup(
+            inButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton4Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel38))
+        );
+
+        editButton4.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton4MouseExited(evt);
+            }
+        });
+
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton4Layout = new javax.swing.GroupLayout(editButton4);
+        editButton4.setLayout(editButton4Layout);
+        editButton4Layout.setHorizontalGroup(
+            editButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton4Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel39)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton4Layout.setVerticalGroup(
+            editButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton4Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel39)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addComponent(inButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel19.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf4.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf4.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf4.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel19.add(hospedeInf4);
+
+        dataSaidaInf4.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf4.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf4.setText(" ");
+        //Thread thread001 = new Thread(runnable);
+        //thread001.setDaemon(true);
+        //thread001.start();
+        jPanel19.add(dataSaidaInf4);
 
         javax.swing.GroupLayout quarto12Layout = new javax.swing.GroupLayout(quarto12);
         quarto12.setLayout(quarto12Layout);
         quarto12Layout.setHorizontalGroup(
             quarto12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(quarto12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto12Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(quarto12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(disponibilidade4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         quarto12Layout.setVerticalGroup(
             quarto12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(quarto12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto12Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(disponibilidade4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(1, 1, 1)
+                    .addGroup(quarto12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(quarto12Layout.createSequentialGroup()
+                            .addGap(149, 149, 149)
+                            .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(3, 3, 3)
+                    .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        quarto13.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto13.setBackground(new java.awt.Color(0,0,0,50));
         quarto13.setPreferredSize(new java.awt.Dimension(300, 250));
+
+        jPanel20.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel20.setLayout(new java.awt.GridBagLayout());
+
+        jLabel40.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel20.add(jLabel40, gridBagConstraints);
+
+        nrQuarto5.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto5.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto5.setText(new QuartoDAO().findById(5).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel20.add(nrQuarto5, gridBagConstraints);
+
+        jLabel41.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel41.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel20.add(jLabel41, gridBagConstraints);
+
+        tipo5.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo5.setForeground(new java.awt.Color(255, 255, 255));
+        tipo5.setText(new QuartoDAO().findById(5).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel20.add(tipo5, gridBagConstraints);
+
+        jLabel42.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel42.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel20.add(jLabel42, gridBagConstraints);
+
+        status5.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status5.setForeground(new java.awt.Color(255, 255, 255));
+        status5.setText(new QuartoDAO().findById(5).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel20.add(status5, gridBagConstraints);
+
+        jLabel43.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel43.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel20.add(jLabel43, gridBagConstraints);
+
+        preco5.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco5.setForeground(new java.awt.Color(255, 255, 255));
+        preco5.setText(String.valueOf(new QuartoDAO().findById(5).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel20.add(preco5, gridBagConstraints);
+
+        disponibilidade5.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread01 = new Thread(runable);
+        //thread01.setDaemon(true);
+        //thread01.start();
+
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade5Layout = new javax.swing.GroupLayout(disponibilidade5);
+        disponibilidade5.setLayout(disponibilidade5Layout);
+        disponibilidade5Layout.setHorizontalGroup(
+            disponibilidade5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        disponibilidade5Layout.setVerticalGroup(
+            disponibilidade5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel21.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton5.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton5MouseExited(evt);
+            }
+        });
+
+        jLabel44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton5Layout = new javax.swing.GroupLayout(outButton5);
+        outButton5.setLayout(outButton5Layout);
+        outButton5Layout.setHorizontalGroup(
+            outButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton5Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel44)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton5Layout.setVerticalGroup(
+            outButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton5Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel44)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton5.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton5MouseExited(evt);
+            }
+        });
+
+        jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton5Layout = new javax.swing.GroupLayout(inButton5);
+        inButton5.setLayout(inButton5Layout);
+        inButton5Layout.setHorizontalGroup(
+            inButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton5Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton5Layout.setVerticalGroup(
+            inButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton5Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel45))
+        );
+
+        editButton5.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton5MouseExited(evt);
+            }
+        });
+
+        jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton5Layout = new javax.swing.GroupLayout(editButton5);
+        editButton5.setLayout(editButton5Layout);
+        editButton5Layout.setHorizontalGroup(
+            editButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton5Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel46)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton5Layout.setVerticalGroup(
+            editButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton5Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel46)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addComponent(inButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel22.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf5.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf5.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf5.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel22.add(hospedeInf5);
+
+        dataSaidaInf5.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf5.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf5.setText(" ");
+        //Thread thread001 = new Thread(runnable);
+        //thread001.setDaemon(true);
+        //thread001.start();
+        jPanel22.add(dataSaidaInf5);
 
         javax.swing.GroupLayout quarto13Layout = new javax.swing.GroupLayout(quarto13);
         quarto13.setLayout(quarto13Layout);
         quarto13Layout.setHorizontalGroup(
             quarto13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(quarto13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto13Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(quarto13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(disponibilidade5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         quarto13Layout.setVerticalGroup(
             quarto13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(quarto13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto13Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(disponibilidade5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(1, 1, 1)
+                    .addGroup(quarto13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(quarto13Layout.createSequentialGroup()
+                            .addGap(149, 149, 149)
+                            .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(3, 3, 3)
+                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        quarto14.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto14.setBackground(new java.awt.Color(0,0,0,50));
         quarto14.setPreferredSize(new java.awt.Dimension(300, 250));
+        quarto14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout quarto14Layout = new javax.swing.GroupLayout(quarto14);
-        quarto14.setLayout(quarto14Layout);
-        quarto14Layout.setHorizontalGroup(
-            quarto14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        disponibilidade2.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread01 = new Thread(runable);
+        //thread01.setDaemon(true);
+        //thread01.start();
+
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade2Layout = new javax.swing.GroupLayout(disponibilidade2);
+        disponibilidade2.setLayout(disponibilidade2Layout);
+        disponibilidade2Layout.setHorizontalGroup(
+            disponibilidade2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        quarto14Layout.setVerticalGroup(
-            quarto14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+        disponibilidade2Layout.setVerticalGroup(
+            disponibilidade2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        quarto15.setBackground(new java.awt.Color(255, 255, 255,90));
+        quarto14.add(disponibilidade2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 10));
+
+        jPanel9.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel9.setLayout(new java.awt.GridBagLayout());
+
+        jLabel13.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel9.add(jLabel13, gridBagConstraints);
+
+        nrQuarto2.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto2.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto2.setText(new QuartoDAO().findById(2).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel9.add(nrQuarto2, gridBagConstraints);
+
+        jLabel14.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel9.add(jLabel14, gridBagConstraints);
+
+        tipo2.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo2.setForeground(new java.awt.Color(255, 255, 255));
+        tipo2.setText(new QuartoDAO().findById(2).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel9.add(tipo2, gridBagConstraints);
+
+        jLabel15.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel9.add(jLabel15, gridBagConstraints);
+
+        status2.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status2.setForeground(new java.awt.Color(255, 255, 255));
+        status2.setText(new QuartoDAO().findById(2).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel9.add(status2, gridBagConstraints);
+
+        jLabel16.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel9.add(jLabel16, gridBagConstraints);
+
+        preco2.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco2.setForeground(new java.awt.Color(255, 255, 255));
+        preco2.setText(String.valueOf(new QuartoDAO().findById(2).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel9.add(preco2, gridBagConstraints);
+
+        quarto14.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 300, 150));
+
+        jPanel12.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf2.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf2.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf2.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel12.add(hospedeInf2);
+
+        dataSaidaInf2.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf2.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf2.setText(" ");
+        //Thread thread001 = new Thread(runnable);
+        //thread001.setDaemon(true);
+        //thread001.start();
+        jPanel12.add(dataSaidaInf2);
+
+        quarto14.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 300, -1));
+
+        jPanel13.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton2.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton2MouseExited(evt);
+            }
+        });
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton2Layout = new javax.swing.GroupLayout(outButton2);
+        outButton2.setLayout(outButton2Layout);
+        outButton2Layout.setHorizontalGroup(
+            outButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel25)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton2Layout.setVerticalGroup(
+            outButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton2Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel25)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton2.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton2MouseExited(evt);
+            }
+        });
+
+        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton2Layout = new javax.swing.GroupLayout(inButton2);
+        inButton2.setLayout(inButton2Layout);
+        inButton2Layout.setHorizontalGroup(
+            inButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton2Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton2Layout.setVerticalGroup(
+            inButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton2Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel26))
+        );
+
+        editButton2.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton2MouseExited(evt);
+            }
+        });
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton2Layout = new javax.swing.GroupLayout(editButton2);
+        editButton2.setLayout(editButton2Layout);
+        editButton2Layout.setHorizontalGroup(
+            editButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel27)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton2Layout.setVerticalGroup(
+            editButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton2Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel27)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addComponent(inButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        quarto14.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 300, 50));
+
+        quarto15.setBackground(new java.awt.Color(0,0,0,50));
         quarto15.setPreferredSize(new java.awt.Dimension(300, 250));
+
+        disponibilidade3.setBackground(new java.awt.Color(95, 241, 95));
+        //Thread thread01 = new Thread(runable);
+        //thread01.setDaemon(true);
+        //thread01.start();
+
+        if(cont==false){
+            // disponibilidade.setBackground(new Color(241, 95, 95));
+        }else if(cont==true){
+            // disponibilidade.setBackground(new Color(88, 168, 247));
+        }
+
+        javax.swing.GroupLayout disponibilidade3Layout = new javax.swing.GroupLayout(disponibilidade3);
+        disponibilidade3.setLayout(disponibilidade3Layout);
+        disponibilidade3Layout.setHorizontalGroup(
+            disponibilidade3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        disponibilidade3Layout.setVerticalGroup(
+            disponibilidade3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel14.setBackground(new java.awt.Color(0,0,0,50));
+        jPanel14.setLayout(new java.awt.GridBagLayout());
+
+        jLabel17.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Quarto Nr: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 24, 0, 0);
+        jPanel14.add(jLabel17, gridBagConstraints);
+
+        nrQuarto3.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        nrQuarto3.setForeground(new java.awt.Color(255, 255, 255));
+        nrQuarto3.setText(new QuartoDAO().findById(3).getNumeroQuarto().toString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 71);
+        jPanel14.add(nrQuarto3, gridBagConstraints);
+
+        jLabel18.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Tipo: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 66, 0, 0);
+        jPanel14.add(jLabel18, gridBagConstraints);
+
+        tipo3.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        tipo3.setForeground(new java.awt.Color(255, 255, 255));
+        tipo3.setText(new QuartoDAO().findById(3).getTipo());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel14.add(tipo3, gridBagConstraints);
+
+        jLabel28.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("Status: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 57, 0, 0);
+        jPanel14.add(jLabel28, gridBagConstraints);
+
+        status3.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        status3.setForeground(new java.awt.Color(255, 255, 255));
+        status3.setText(new QuartoDAO().findById(3).getStatus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 0, 71);
+        jPanel14.add(status3, gridBagConstraints);
+
+        jLabel29.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("Preco: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 58, 16, 0);
+        jPanel14.add(jLabel29, gridBagConstraints);
+
+        preco3.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        preco3.setForeground(new java.awt.Color(255, 255, 255));
+        preco3.setText(String.valueOf(new QuartoDAO().findById(3).getPreco()));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 16, 71);
+        jPanel14.add(preco3, gridBagConstraints);
+
+        jPanel15.setBackground(new java.awt.Color(0,0,0,50));
+
+        hospedeInf3.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        hospedeInf3.setForeground(new java.awt.Color(255, 255, 255));
+        hospedeInf3.setText(hospede);
+        dataSaidaInf.setText(dataSaidaI);
+        jPanel15.add(hospedeInf3);
+
+        dataSaidaInf3.setFont(new java.awt.Font("Serif", 0, 20)); // NOI18N
+        dataSaidaInf3.setForeground(new java.awt.Color(255, 255, 255));
+        dataSaidaInf3.setText(" ");
+        //Thread thread001 = new Thread(runnable);
+        //thread001.setDaemon(true);
+        //thread001.start();
+        jPanel15.add(dataSaidaInf3);
+
+        jPanel16.setBackground(new java.awt.Color(0, 0, 0,50));
+
+        outButton3.setBackground(new java.awt.Color(0, 0, 0,1));
+        outButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                outButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                outButton3MouseExited(evt);
+            }
+        });
+
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_.png"))); // NOI18N
+
+        javax.swing.GroupLayout outButton3Layout = new javax.swing.GroupLayout(outButton3);
+        outButton3.setLayout(outButton3Layout);
+        outButton3Layout.setHorizontalGroup(
+            outButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel30)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        outButton3Layout.setVerticalGroup(
+            outButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outButton3Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel30)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        inButton3.setBackground(new java.awt.Color(0, 0, 0,1));
+        inButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inButton3MouseExited(evt);
+            }
+        });
+
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus_math_40px.png"))); // NOI18N
+
+        javax.swing.GroupLayout inButton3Layout = new javax.swing.GroupLayout(inButton3);
+        inButton3.setLayout(inButton3Layout);
+        inButton3Layout.setHorizontalGroup(
+            inButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inButton3Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        inButton3Layout.setVerticalGroup(
+            inButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inButton3Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel31))
+        );
+
+        editButton3.setBackground(new java.awt.Color(0, 0, 0,1));
+        editButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editButton3MouseExited(evt);
+            }
+        });
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit_file_35px.png"))); // NOI18N
+
+        javax.swing.GroupLayout editButton3Layout = new javax.swing.GroupLayout(editButton3);
+        editButton3.setLayout(editButton3Layout);
+        editButton3Layout.setHorizontalGroup(
+            editButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel32)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        editButton3Layout.setVerticalGroup(
+            editButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editButton3Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel32)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addComponent(inButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(editButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(outButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(inButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(outButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout quarto15Layout = new javax.swing.GroupLayout(quarto15);
         quarto15.setLayout(quarto15Layout);
         quarto15Layout.setHorizontalGroup(
             quarto15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(quarto15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto15Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(quarto15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(disponibilidade3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         quarto15Layout.setVerticalGroup(
             quarto15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(quarto15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(quarto15Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(disponibilidade3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(1, 1, 1)
+                    .addGroup(quarto15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(quarto15Layout.createSequentialGroup()
+                            .addGap(149, 149, 149)
+                            .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(3, 3, 3)
+                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout PainelQuartosLayout = new javax.swing.GroupLayout(PainelQuartos);
@@ -375,10 +4424,11 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
                     .addGroup(PainelQuartosLayout.createSequentialGroup()
                         .addGroup(PainelQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PainelQuartosLayout.createSequentialGroup()
+                                .addGap(95, 95, 95)
                                 .addComponent(quarto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(quarto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(27, 27, 27)
                                 .addComponent(quarto3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(quarto4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -394,7 +4444,7 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
                                 .addComponent(quarto9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(quarto10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 16, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         PainelQuartosLayout.setVerticalGroup(
@@ -406,9 +4456,9 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
                     .addGroup(PainelQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(quarto5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(quarto4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(quarto3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(quarto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(51, 51, 51)
+                        .addComponent(quarto3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(quarto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(PainelQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(quarto6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PainelQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -424,7 +4474,7 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
                         .addComponent(quarto12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(quarto15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(quarto14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         HomeConteiner.add(PainelQuartos, java.awt.BorderLayout.CENTER);
@@ -434,20 +4484,1215 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void inButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButtonMouseEntered
+        ChangeColor(inButton,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButtonMouseEntered
+
+    private void inButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButtonMouseExited
+        ChangeColor(inButton,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButtonMouseExited
+
+    private void inButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButtonMouseClicked
+        new AddHospedagens().setVisible(true);
+    }//GEN-LAST:event_inButtonMouseClicked
+
+    private void outButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButtonMouseEntered
+       ChangeColor(outButton,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButtonMouseEntered
+
+    private void outButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButtonMouseExited
+       ChangeColor(outButton,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButtonMouseExited
+
+    private void outButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButtonMouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==1){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf.setText("");
+        dataSaidaInf.setText("");
+    }//GEN-LAST:event_outButtonMouseClicked
+
+    private void editButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseClicked
+       new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButtonMouseClicked
+
+    private void editButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseEntered
+       ChangeColor(editButton,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButtonMouseEntered
+
+    private void editButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseExited
+        ChangeColor(editButton,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButtonMouseExited
+
+    private void outButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton1MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==1){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf1.setText("");
+        dataSaidaInf1.setText("");
+    }//GEN-LAST:event_outButton1MouseClicked
+
+    private void outButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton1MouseEntered
+        ChangeColor(outButton1,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton1MouseEntered
+
+    private void outButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton1MouseExited
+        ChangeColor(outButton1,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton1MouseExited
+
+    private void inButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton1MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(1);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton1MouseClicked
+
+    private void inButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton1MouseEntered
+        ChangeColor(inButton1,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton1MouseEntered
+
+    private void inButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton1MouseExited
+        ChangeColor(inButton1,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton1MouseExited
+
+    private void editButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton1MouseClicked
+
+    private void editButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseEntered
+        ChangeColor(editButton1,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton1MouseEntered
+
+    private void editButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton1MouseExited
+        ChangeColor(editButton1,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton1MouseExited
+
+    private void outButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton2MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==2){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf2.setText("");
+        dataSaidaInf2.setText("");
+    }//GEN-LAST:event_outButton2MouseClicked
+
+    private void outButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton2MouseEntered
+        ChangeColor(outButton2,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton2MouseEntered
+
+    private void outButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton2MouseExited
+        ChangeColor(outButton2,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton2MouseExited
+
+    private void inButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton2MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(2);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton2MouseClicked
+
+    private void inButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton2MouseEntered
+        ChangeColor(inButton2,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton2MouseEntered
+
+    private void inButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton2MouseExited
+        ChangeColor(inButton2,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton2MouseExited
+
+    private void editButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton2MouseClicked
+
+    private void editButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseEntered
+        ChangeColor(editButton2,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton2MouseEntered
+
+    private void editButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton2MouseExited
+        ChangeColor(editButton2,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton2MouseExited
+
+    private void outButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton3MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==3){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf3.setText("");
+        dataSaidaInf3.setText("");
+    }//GEN-LAST:event_outButton3MouseClicked
+
+    private void outButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton3MouseEntered
+        ChangeColor(outButton3,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton3MouseEntered
+
+    private void outButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton3MouseExited
+        ChangeColor(outButton3,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton3MouseExited
+
+    private void inButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton3MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(3);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton3MouseClicked
+
+    private void inButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton3MouseEntered
+        ChangeColor(inButton3,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton3MouseEntered
+
+    private void inButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton3MouseExited
+        ChangeColor(inButton3,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton3MouseExited
+
+    private void editButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton3MouseClicked
+
+    private void editButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseEntered
+        ChangeColor(editButton3,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton3MouseEntered
+
+    private void editButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton3MouseExited
+        ChangeColor(editButton3,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton3MouseExited
+
+    private void outButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton4MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==4){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf4.setText("");
+        dataSaidaInf4.setText("");
+    }//GEN-LAST:event_outButton4MouseClicked
+
+    private void outButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton4MouseEntered
+        ChangeColor(outButton4,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton4MouseEntered
+
+    private void outButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton4MouseExited
+        ChangeColor(outButton4,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton4MouseExited
+
+    private void inButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton4MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(4);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton4MouseClicked
+
+    private void inButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton4MouseEntered
+        ChangeColor(inButton4,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton4MouseEntered
+
+    private void inButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton4MouseExited
+        ChangeColor(inButton4,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton4MouseExited
+
+    private void editButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton4MouseClicked
+
+    private void editButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseEntered
+        ChangeColor(editButton4,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton4MouseEntered
+
+    private void editButton4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton4MouseExited
+        ChangeColor(editButton,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton4MouseExited
+
+    private void outButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton5MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==5){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf5.setText("");
+        dataSaidaInf5.setText("");
+    }//GEN-LAST:event_outButton5MouseClicked
+
+    private void outButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton5MouseEntered
+        ChangeColor(outButton5,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton5MouseEntered
+
+    private void outButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton5MouseExited
+        ChangeColor(outButton5,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton5MouseExited
+
+    private void inButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton5MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(5);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton5MouseClicked
+
+    private void inButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton5MouseEntered
+        ChangeColor(inButton5,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton5MouseEntered
+
+    private void inButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton5MouseExited
+        ChangeColor(inButton5,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton5MouseExited
+
+    private void editButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton5MouseClicked
+
+    private void editButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseEntered
+        ChangeColor(editButton5,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton5MouseEntered
+
+    private void editButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton5MouseExited
+         ChangeColor(editButton1,new Color(0,0,0,1));
+         SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton5MouseExited
+
+    private void outButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton6MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==7){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf6.setText("");
+        dataSaidaInf6.setText("");
+    }//GEN-LAST:event_outButton6MouseClicked
+
+    private void outButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton6MouseEntered
+        ChangeColor(outButton6,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton6MouseEntered
+
+    private void outButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton6MouseExited
+        ChangeColor(outButton6,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton6MouseExited
+
+    private void inButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton6MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(7);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton6MouseClicked
+
+    private void inButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton6MouseEntered
+        ChangeColor(inButton6,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton6MouseEntered
+
+    private void inButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton6MouseExited
+        ChangeColor(inButton6,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton6MouseExited
+
+    private void editButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton6MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton6MouseClicked
+
+    private void editButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton6MouseEntered
+        ChangeColor(editButton6,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton6MouseEntered
+
+    private void editButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton6MouseExited
+        ChangeColor(editButton6,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton6MouseExited
+
+    private void outButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton7MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==8){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf7.setText("");
+        dataSaidaInf7.setText("");
+    }//GEN-LAST:event_outButton7MouseClicked
+
+    private void outButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton7MouseEntered
+        ChangeColor(outButton7,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton7MouseEntered
+
+    private void outButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton7MouseExited
+        ChangeColor(outButton7,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton7MouseExited
+
+    private void inButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton7MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(8);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton7MouseClicked
+
+    private void inButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton7MouseEntered
+        ChangeColor(inButton7,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton7MouseEntered
+
+    private void inButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton7MouseExited
+        ChangeColor(inButton7,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton7MouseExited
+
+    private void editButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton7MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton7MouseClicked
+
+    private void editButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton7MouseEntered
+        ChangeColor(editButton7,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton7MouseEntered
+
+    private void editButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton7MouseExited
+        ChangeColor(editButton7,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton7MouseExited
+
+    private void outButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton8MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==9){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf8.setText("");
+        dataSaidaInf8.setText("");
+    }//GEN-LAST:event_outButton8MouseClicked
+
+    private void outButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton8MouseEntered
+        ChangeColor(outButton8,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton8MouseEntered
+
+    private void outButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton8MouseExited
+        ChangeColor(outButton8,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton8MouseExited
+
+    private void inButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton8MouseClicked
+        new AddHospedagens().setVisible(true);
+    }//GEN-LAST:event_inButton8MouseClicked
+
+    private void inButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton8MouseEntered
+        ChangeColor(inButton8,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton8MouseEntered
+
+    private void inButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton8MouseExited
+        ChangeColor(inButton8,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton8MouseExited
+
+    private void editButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton8MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(9);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_editButton8MouseClicked
+
+    private void editButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton8MouseEntered
+        ChangeColor(editButton8,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton8MouseEntered
+
+    private void editButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton8MouseExited
+        ChangeColor(editButton8,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton8MouseExited
+
+    private void outButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton9MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==10){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf9.setText("");
+        dataSaidaInf9.setText("");
+    }//GEN-LAST:event_outButton9MouseClicked
+
+    private void outButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton9MouseEntered
+        ChangeColor(outButton9,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton9MouseEntered
+
+    private void outButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton9MouseExited
+        ChangeColor(outButton9,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton9MouseExited
+
+    private void inButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton9MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(10);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton9MouseClicked
+
+    private void inButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton9MouseEntered
+        ChangeColor(inButton9,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton9MouseEntered
+
+    private void inButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton9MouseExited
+        ChangeColor(inButton9,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton9MouseExited
+
+    private void editButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton9MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton9MouseClicked
+
+    private void editButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton9MouseEntered
+        ChangeColor(editButton9,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton9MouseEntered
+
+    private void editButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton9MouseExited
+        ChangeColor(editButton9,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton9MouseExited
+
+    private void outButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton10MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==11){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf10.setText("");
+        dataSaidaInf10.setText("");
+    }//GEN-LAST:event_outButton10MouseClicked
+
+    private void outButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton10MouseEntered
+        ChangeColor(outButton10,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton10MouseEntered
+
+    private void outButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton10MouseExited
+        ChangeColor(outButton10,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton10MouseExited
+
+    private void inButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton10MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(11);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton10MouseClicked
+
+    private void inButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton10MouseEntered
+        ChangeColor(inButton10,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton10MouseEntered
+
+    private void inButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton10MouseExited
+        ChangeColor(inButton10,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton10MouseExited
+
+    private void editButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton10MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton10MouseClicked
+
+    private void editButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton10MouseEntered
+        ChangeColor(editButton10,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton10MouseEntered
+
+    private void editButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton10MouseExited
+        ChangeColor(editButton10,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton10MouseExited
+
+    private void outButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton11MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==12){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf11.setText("");
+        dataSaidaInf11.setText("");
+    }//GEN-LAST:event_outButton11MouseClicked
+
+    private void outButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton11MouseEntered
+        ChangeColor(outButton11,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton11MouseEntered
+
+    private void outButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton11MouseExited
+        ChangeColor(outButton11,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton11MouseExited
+
+    private void inButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton11MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(12);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton11MouseClicked
+
+    private void inButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton11MouseEntered
+        ChangeColor(inButton11,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton11MouseEntered
+
+    private void inButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton11MouseExited
+        ChangeColor(inButton11,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton11MouseExited
+
+    private void editButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton11MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton11MouseClicked
+
+    private void editButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton11MouseEntered
+        ChangeColor(editButton11,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton11MouseEntered
+
+    private void editButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton11MouseExited
+        ChangeColor(editButton11,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton11MouseExited
+
+    private void outButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton12MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==13){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf12.setText("");
+        dataSaidaInf12.setText("");
+    }//GEN-LAST:event_outButton12MouseClicked
+
+    private void outButton12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton12MouseEntered
+        ChangeColor(outButton12,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton12MouseEntered
+
+    private void outButton12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton12MouseExited
+        ChangeColor(outButton12,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton12MouseExited
+
+    private void inButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton12MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(13);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton12MouseClicked
+
+    private void inButton12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton12MouseEntered
+        ChangeColor(inButton12,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton12MouseEntered
+
+    private void inButton12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton12MouseExited
+        ChangeColor(inButton12,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton12MouseExited
+
+    private void editButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton12MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton12MouseClicked
+
+    private void editButton12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton12MouseEntered
+        ChangeColor(editButton12,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton12MouseEntered
+
+    private void editButton12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton12MouseExited
+        ChangeColor(editButton12,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton12MouseExited
+
+    private void outButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton13MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==14){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf13.setText("");
+        dataSaidaInf13.setText("");
+    }//GEN-LAST:event_outButton13MouseClicked
+
+    private void outButton13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton13MouseEntered
+        ChangeColor(outButton13,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton13MouseEntered
+
+    private void outButton13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton13MouseExited
+        ChangeColor(outButton13,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton13MouseExited
+
+    private void inButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton13MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(14);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton13MouseClicked
+
+    private void inButton13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton13MouseEntered
+        ChangeColor(inButton13,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton13MouseEntered
+
+    private void inButton13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton13MouseExited
+        ChangeColor(inButton13,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton13MouseExited
+
+    private void editButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton13MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton13MouseClicked
+
+    private void editButton13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton13MouseEntered
+        ChangeColor(editButton13,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton13MouseEntered
+
+    private void editButton13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton13MouseExited
+        ChangeColor(editButton13,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton13MouseExited
+
+    private void outButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton14MouseClicked
+        HospedagemDAO dao = new HospedagemDAO();
+        List <Hospedagem> listaH = dao.findAll();
+        for(int i=0;i<listaH.size();i++){
+            int id=listaH.get(i).getQuarto().getIdQuarto();
+            if(id==15){
+                if(listaH.get(i).getNrDeHospedes()!=0){
+                    Hospedagem hospedagem=listaH.get(i);
+                    hospedagem.setNrDeHospedes(0);
+                    dao.update(hospedagem);
+
+                    Quarto quarto=listaH.get(i).getQuarto();
+                    quarto.setDisp("disponivel");
+                    new QuartoDAO().update(quarto);
+                }
+            }
+        }
+        hospedeInf14.setText("");
+        dataSaidaInf14.setText("");
+    }//GEN-LAST:event_outButton14MouseClicked
+
+    private void outButton14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton14MouseEntered
+        ChangeColor(outButton14,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton14MouseEntered
+
+    private void outButton14MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outButton14MouseExited
+        ChangeColor(outButton14,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_outButton14MouseExited
+
+    private void inButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton14MouseClicked
+        AddHospedagens add = new AddHospedagens();
+        Quarto quarto=new QuartoDAO().findById(15);
+        add.setQuarto(quarto);
+        add.setVisible(true);
+    }//GEN-LAST:event_inButton14MouseClicked
+
+    private void inButton14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton14MouseEntered
+        ChangeColor(inButton14,new Color(0,0,0,50));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton14MouseEntered
+
+    private void inButton14MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inButton14MouseExited
+        ChangeColor(inButton14,new Color(0,0,0,1));
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_inButton14MouseExited
+
+    private void editButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton14MouseClicked
+        new UpdateHospedagens().setVisible(true);
+    }//GEN-LAST:event_editButton14MouseClicked
+
+    private void editButton14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton14MouseEntered
+        ChangeColor(editButton14,new Color(0,0,0,50));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton14MouseEntered
+
+    private void editButton14MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButton14MouseExited
+        ChangeColor(editButton14,new Color(0,0,0,1));
+       SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_editButton14MouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel HomeConteiner;
     private javax.swing.JPanel PainelQuartos;
+    private javax.swing.JLabel dataSaidaInf;
+    private javax.swing.JLabel dataSaidaInf1;
+    private javax.swing.JLabel dataSaidaInf10;
+    private javax.swing.JLabel dataSaidaInf11;
+    private javax.swing.JLabel dataSaidaInf12;
+    private javax.swing.JLabel dataSaidaInf13;
+    private javax.swing.JLabel dataSaidaInf14;
+    private javax.swing.JLabel dataSaidaInf2;
+    private javax.swing.JLabel dataSaidaInf3;
+    private javax.swing.JLabel dataSaidaInf4;
+    private javax.swing.JLabel dataSaidaInf5;
+    private javax.swing.JLabel dataSaidaInf6;
+    private javax.swing.JLabel dataSaidaInf7;
+    private javax.swing.JLabel dataSaidaInf8;
+    private javax.swing.JLabel dataSaidaInf9;
+    private javax.swing.JPanel disponibilidade;
+    private javax.swing.JPanel disponibilidade1;
+    private javax.swing.JPanel disponibilidade10;
+    private javax.swing.JPanel disponibilidade11;
+    private javax.swing.JPanel disponibilidade12;
+    private javax.swing.JPanel disponibilidade13;
+    private javax.swing.JPanel disponibilidade14;
+    private javax.swing.JPanel disponibilidade2;
+    private javax.swing.JPanel disponibilidade3;
+    private javax.swing.JPanel disponibilidade4;
+    private javax.swing.JPanel disponibilidade5;
+    private javax.swing.JPanel disponibilidade6;
+    private javax.swing.JPanel disponibilidade7;
+    private javax.swing.JPanel disponibilidade8;
+    private javax.swing.JPanel disponibilidade9;
+    private javax.swing.JPanel editButton;
+    private javax.swing.JPanel editButton1;
+    private javax.swing.JPanel editButton10;
+    private javax.swing.JPanel editButton11;
+    private javax.swing.JPanel editButton12;
+    private javax.swing.JPanel editButton13;
+    private javax.swing.JPanel editButton14;
+    private javax.swing.JPanel editButton2;
+    private javax.swing.JPanel editButton3;
+    private javax.swing.JPanel editButton4;
+    private javax.swing.JPanel editButton5;
+    private javax.swing.JPanel editButton6;
+    private javax.swing.JPanel editButton7;
+    private javax.swing.JPanel editButton8;
+    private javax.swing.JPanel editButton9;
+    private javax.swing.JLabel hospedeInf;
+    private javax.swing.JLabel hospedeInf1;
+    private javax.swing.JLabel hospedeInf10;
+    private javax.swing.JLabel hospedeInf11;
+    private javax.swing.JLabel hospedeInf12;
+    private javax.swing.JLabel hospedeInf13;
+    private javax.swing.JLabel hospedeInf14;
+    private javax.swing.JLabel hospedeInf2;
+    private javax.swing.JLabel hospedeInf3;
+    private javax.swing.JLabel hospedeInf4;
+    private javax.swing.JLabel hospedeInf5;
+    private javax.swing.JLabel hospedeInf6;
+    private javax.swing.JLabel hospedeInf7;
+    private javax.swing.JLabel hospedeInf8;
+    private javax.swing.JLabel hospedeInf9;
+    private javax.swing.JPanel inButton;
+    private javax.swing.JPanel inButton1;
+    private javax.swing.JPanel inButton10;
+    private javax.swing.JPanel inButton11;
+    private javax.swing.JPanel inButton12;
+    private javax.swing.JPanel inButton13;
+    private javax.swing.JPanel inButton14;
+    private javax.swing.JPanel inButton2;
+    private javax.swing.JPanel inButton3;
+    private javax.swing.JPanel inButton4;
+    private javax.swing.JPanel inButton5;
+    private javax.swing.JPanel inButton6;
+    private javax.swing.JPanel inButton7;
+    private javax.swing.JPanel inButton8;
+    private javax.swing.JPanel inButton9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel100;
+    private javax.swing.JLabel jLabel101;
+    private javax.swing.JLabel jLabel102;
+    private javax.swing.JLabel jLabel103;
+    private javax.swing.JLabel jLabel104;
+    private javax.swing.JLabel jLabel105;
+    private javax.swing.JLabel jLabel106;
+    private javax.swing.JLabel jLabel107;
+    private javax.swing.JLabel jLabel108;
+    private javax.swing.JLabel jLabel109;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel71;
+    private javax.swing.JLabel jLabel72;
+    private javax.swing.JLabel jLabel73;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel79;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
+    private javax.swing.JLabel jLabel82;
+    private javax.swing.JLabel jLabel83;
+    private javax.swing.JLabel jLabel84;
+    private javax.swing.JLabel jLabel85;
+    private javax.swing.JLabel jLabel86;
+    private javax.swing.JLabel jLabel87;
+    private javax.swing.JLabel jLabel88;
+    private javax.swing.JLabel jLabel89;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel90;
+    private javax.swing.JLabel jLabel91;
+    private javax.swing.JLabel jLabel92;
+    private javax.swing.JLabel jLabel93;
+    private javax.swing.JLabel jLabel94;
+    private javax.swing.JLabel jLabel95;
+    private javax.swing.JLabel jLabel96;
+    private javax.swing.JLabel jLabel97;
+    private javax.swing.JLabel jLabel98;
+    private javax.swing.JLabel jLabel99;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel30;
+    private javax.swing.JPanel jPanel31;
+    private javax.swing.JPanel jPanel32;
+    private javax.swing.JPanel jPanel33;
+    private javax.swing.JPanel jPanel34;
+    private javax.swing.JPanel jPanel35;
+    private javax.swing.JPanel jPanel36;
+    private javax.swing.JPanel jPanel37;
+    private javax.swing.JPanel jPanel38;
+    private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel40;
+    private javax.swing.JPanel jPanel41;
+    private javax.swing.JPanel jPanel42;
+    private javax.swing.JPanel jPanel43;
+    private javax.swing.JPanel jPanel44;
+    private javax.swing.JPanel jPanel45;
+    private javax.swing.JPanel jPanel46;
+    private javax.swing.JPanel jPanel47;
+    private javax.swing.JPanel jPanel48;
+    private javax.swing.JPanel jPanel49;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel nrQuarto;
+    private javax.swing.JLabel nrQuarto1;
+    private javax.swing.JLabel nrQuarto10;
+    private javax.swing.JLabel nrQuarto11;
+    private javax.swing.JLabel nrQuarto12;
+    private javax.swing.JLabel nrQuarto13;
+    private javax.swing.JLabel nrQuarto14;
+    private javax.swing.JLabel nrQuarto2;
+    private javax.swing.JLabel nrQuarto3;
+    private javax.swing.JLabel nrQuarto4;
+    private javax.swing.JLabel nrQuarto5;
+    private javax.swing.JLabel nrQuarto6;
+    private javax.swing.JLabel nrQuarto7;
+    private javax.swing.JLabel nrQuarto8;
+    private javax.swing.JLabel nrQuarto9;
+    private javax.swing.JPanel outButton;
+    private javax.swing.JPanel outButton1;
+    private javax.swing.JPanel outButton10;
+    private javax.swing.JPanel outButton11;
+    private javax.swing.JPanel outButton12;
+    private javax.swing.JPanel outButton13;
+    private javax.swing.JPanel outButton14;
+    private javax.swing.JPanel outButton2;
+    private javax.swing.JPanel outButton3;
+    private javax.swing.JPanel outButton4;
+    private javax.swing.JPanel outButton5;
+    private javax.swing.JPanel outButton6;
+    private javax.swing.JPanel outButton7;
+    private javax.swing.JPanel outButton8;
+    private javax.swing.JPanel outButton9;
+    private javax.swing.JLabel preco;
+    private javax.swing.JLabel preco1;
+    private javax.swing.JLabel preco10;
+    private javax.swing.JLabel preco11;
+    private javax.swing.JLabel preco12;
+    private javax.swing.JLabel preco13;
+    private javax.swing.JLabel preco14;
+    private javax.swing.JLabel preco2;
+    private javax.swing.JLabel preco3;
+    private javax.swing.JLabel preco4;
+    private javax.swing.JLabel preco5;
+    private javax.swing.JLabel preco6;
+    private javax.swing.JLabel preco7;
+    private javax.swing.JLabel preco8;
+    private javax.swing.JLabel preco9;
     private javax.swing.JPanel quarto1;
     private javax.swing.JPanel quarto10;
     private javax.swing.JPanel quarto11;
@@ -463,5 +5708,35 @@ public class PainelQuartos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel quarto7;
     private javax.swing.JPanel quarto8;
     private javax.swing.JPanel quarto9;
+    private javax.swing.JLabel status;
+    private javax.swing.JLabel status1;
+    private javax.swing.JLabel status10;
+    private javax.swing.JLabel status11;
+    private javax.swing.JLabel status12;
+    private javax.swing.JLabel status13;
+    private javax.swing.JLabel status14;
+    private javax.swing.JLabel status2;
+    private javax.swing.JLabel status3;
+    private javax.swing.JLabel status4;
+    private javax.swing.JLabel status5;
+    private javax.swing.JLabel status6;
+    private javax.swing.JLabel status7;
+    private javax.swing.JLabel status8;
+    private javax.swing.JLabel status9;
+    private javax.swing.JLabel tipo;
+    private javax.swing.JLabel tipo1;
+    private javax.swing.JLabel tipo10;
+    private javax.swing.JLabel tipo11;
+    private javax.swing.JLabel tipo12;
+    private javax.swing.JLabel tipo13;
+    private javax.swing.JLabel tipo14;
+    private javax.swing.JLabel tipo2;
+    private javax.swing.JLabel tipo3;
+    private javax.swing.JLabel tipo4;
+    private javax.swing.JLabel tipo5;
+    private javax.swing.JLabel tipo6;
+    private javax.swing.JLabel tipo7;
+    private javax.swing.JLabel tipo8;
+    private javax.swing.JLabel tipo9;
     // End of variables declaration//GEN-END:variables
 }

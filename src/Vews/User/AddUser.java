@@ -75,13 +75,28 @@ public class AddUser extends javax.swing.JFrame {
         jLabel2.setText("Nome:");
 
         nomeTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        nomeTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nomeTfKeyTyped(evt);
+            }
+        });
 
         apelidoTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        apelidoTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apelidoTfKeyTyped(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel3.setText("Apelido:");
 
         telefoneTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        telefoneTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                telefoneTfKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel4.setText(" Telefone:");
@@ -164,11 +179,21 @@ public class AddUser extends javax.swing.JFrame {
         jLabel5.setText("Nome de Usuario:");
 
         userNameTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        userNameTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                userNameTfKeyTyped(evt);
+            }
+        });
 
         codigoTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        codigoTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codigoTfKeyTyped(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
-        jLabel8.setText("Palavra Pass:");
+        jLabel8.setText("Pin:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -313,10 +338,43 @@ public class AddUser extends javax.swing.JFrame {
             user.setNivelAcesso(nivelAcesso);
             new UsuarioDAO().save(user);
             this.dispose();
-        }
-        
-        
+        }    
     }//GEN-LAST:event_saveButtonMouseClicked
+
+    private void nomeTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nomeTfKeyTyped
+
+    private void apelidoTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apelidoTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_apelidoTfKeyTyped
+
+    private void telefoneTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefoneTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_telefoneTfKeyTyped
+
+    private void userNameTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userNameTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_userNameTfKeyTyped
+
+    private void codigoTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_codigoTfKeyTyped
 
     /**
      * @param args the command line arguments

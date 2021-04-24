@@ -87,12 +87,18 @@ public class AddHospede extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nomeTfKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nomeTfKeyTyped(evt);
+            }
         });
 
         apelidoTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         apelidoTf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 apelidoTfKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apelidoTfKeyTyped(evt);
             }
         });
 
@@ -103,6 +109,9 @@ public class AddHospede extends javax.swing.JFrame {
         telefoneTf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 telefoneTfKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                telefoneTfKeyTyped(evt);
             }
         });
 
@@ -142,6 +151,9 @@ public class AddHospede extends javax.swing.JFrame {
         nacionalidadeTf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nacionalidadeTfKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nacionalidadeTfKeyTyped(evt);
             }
         });
 
@@ -339,7 +351,7 @@ public class AddHospede extends javax.swing.JFrame {
        String tipoDeDoc=tipoDoc[selectedIndex];
        String nrDoc=nrDocTf.getText();
        String nacionalidade=nacionalidadeTf.getText();
-       int nrHospede=(int)(1000+Math.random()* (1000-1000+1));
+       int nrHospede=(int)(1000+Math.random()* (10000-1000+1));
        Hospede hospede;
        hospede=new Hospede(nome, apelido ,telefone ,email , dataNascimento, tipoDeDoc, nrDoc, nacionalidade, nrHospede);
        new HospedeDAO().save(hospede);
@@ -402,6 +414,34 @@ public class AddHospede extends javax.swing.JFrame {
         dataNascimentoTf.requestFocus();
         }
     }//GEN-LAST:event_nacionalidadeTfKeyPressed
+
+    private void nomeTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nomeTfKeyTyped
+
+    private void apelidoTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apelidoTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_apelidoTfKeyTyped
+
+    private void telefoneTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefoneTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_telefoneTfKeyTyped
+
+    private void nacionalidadeTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nacionalidadeTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nacionalidadeTfKeyTyped
 
     /**
      * @param args the command line arguments

@@ -7,7 +7,13 @@ import Models.Quarto;
 import Models.Reservas;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -49,8 +55,6 @@ public class UpdateReserva extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        dataChegadaTf = new javax.swing.JTextField();
-        dataReservaTf = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         tempoEstadia = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -76,8 +80,10 @@ public class UpdateReserva extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         estadoCB = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
+        dataChegadaTf = new com.toedter.calendar.JDateChooser();
+        dataReservaTf = new com.toedter.calendar.JDateChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -92,14 +98,15 @@ public class UpdateReserva extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel2.setText("Data de Chegada:");
 
-        dataChegadaTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        dataReservaTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         jLabel3.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel3.setText("Data da Reserva:");
 
         tempoEstadia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tempoEstadia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tempoEstadiaKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel4.setText(" Tempo de Estadia:");
@@ -184,6 +191,9 @@ public class UpdateReserva extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 idReservaTfKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idReservaTfKeyTyped(evt);
+            }
         });
 
         jLabel7.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
@@ -247,6 +257,11 @@ public class UpdateReserva extends javax.swing.JFrame {
         quartoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         codReservaTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        codReservaTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codReservaTfKeyTyped(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel9.setText("Cod da Reserva:");
@@ -273,34 +288,36 @@ public class UpdateReserva extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel8))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(89, 89, 89)
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(estadoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(dataReservaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dataChegadaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tempoEstadia, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pagamentoCB)
-                                        .addComponent(hospedeTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(quartoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(20, 20, 20)
-                                    .addComponent(jLabel9)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(codReservaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(2, 2, 2))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(89, 89, 89)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(estadoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel6)
+                                                .addComponent(jLabel2)
+                                                .addComponent(jLabel3)
+                                                .addComponent(jLabel4)
+                                                .addComponent(jLabel5)
+                                                .addComponent(jLabel8))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(tempoEstadia, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                                                .addComponent(pagamentoCB)
+                                                .addComponent(hospedeTf, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                                                .addComponent(quartoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(dataChegadaTf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(dataReservaTf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addGap(20, 20, 20)
+                                            .addComponent(jLabel9)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(codReservaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(2, 2, 2))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -324,13 +341,13 @@ public class UpdateReserva extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(codReservaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(dataChegadaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dataChegadaTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
-                    .addComponent(dataReservaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dataReservaTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tempoEstadia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,7 +368,7 @@ public class UpdateReserva extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(estadoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,16 +390,18 @@ public class UpdateReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseClicked
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
-        if(idReservaTf.getText().isEmpty()||codReservaTf.getText().isEmpty()||dataChegadaTf.getText().isEmpty()
-                ||dataReservaTf.getText().isEmpty()||tempoEstadia.getText().isEmpty()||hospedeTf.getText().isEmpty()
+        if(idReservaTf.getText().isEmpty()||codReservaTf.getText().isEmpty()||dataChegadaTf.getDate().toString().isEmpty()
+                ||dataReservaTf.getDate().toString().isEmpty()||tempoEstadia.getText().isEmpty()||hospedeTf.getText().isEmpty()
                 ){
             JOptionPane.showMessageDialog(null, "Por favor, introduza todos dados nos campor de texto!");
         }else{
+           SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+           SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
            Reservas reserva = new Reservas();
            reserva.setIdReserva(Integer.parseInt(idReservaTf.getText()));
            reserva.setCodReserva(Integer.parseInt(codReservaTf.getText()));
-           reserva.setDataChegada(dataChegadaTf.getText());
-           reserva.setDataReserva(dataReservaTf.getText());
+           reserva.setDataChegada(sdf.format(dataChegadaTf.getDate()));
+           reserva.setDataReserva(sdf1.format(dataReservaTf.getDate()));
            reserva.setTempoEstadia(Integer.parseInt(tempoEstadia.getText()));
            Hospede hospede =new Hospede();
            hospede.setIdPessoa(Integer.parseInt(hospedeTf.getText()));
@@ -439,13 +458,28 @@ public class UpdateReserva extends javax.swing.JFrame {
             
             reserva=new ReservasDAO().findById(id);
             idReservaTf.setText(reserva.getIdReserva().toString());
-            dataChegadaTf.setText(reserva.getDataChegada());
-            dataReservaTf.setText(reserva.getDataReserva());
+            Date date1=null;
+            Date date2=null;  
+            try {
+                date1 = new SimpleDateFormat("dd/MM/yyyy").parse(reserva.getDataChegada());
+            } catch (ParseException ex) {
+                Logger.getLogger(UpdateReserva.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                date2 = new SimpleDateFormat("dd/MM/yyyy").parse(reserva.getDataReserva());
+            } catch (ParseException ex) {
+                Logger.getLogger(UpdateReserva.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            dataChegadaTf.setDate(date1);
+                    
+            dataReservaTf.setDate(date2);
             tempoEstadia.setText(reserva.getTempoEstadia().toString());
             hospedeTf.setText(reserva.getHospede().getIdPessoa().toString());
             int index=0;
             for(int i=0;i<quartos.size();i++){
-                if(reserva.getQuartos().getIdQuarto()==quartos.get(i).getIdQuarto()){
+                if(Objects.equals(reserva.getQuartos().getIdQuarto(), quartos.get(i).getIdQuarto())){
                     index=i;
                     break;
                 }
@@ -453,6 +487,27 @@ public class UpdateReserva extends javax.swing.JFrame {
             quartoCB.setSelectedIndex(index);
         }
     }//GEN-LAST:event_idReservaTfKeyPressed
+
+    private void idReservaTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idReservaTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_idReservaTfKeyTyped
+
+    private void codReservaTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codReservaTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_codReservaTfKeyTyped
+
+    private void tempoEstadiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tempoEstadiaKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tempoEstadiaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -493,8 +548,8 @@ public class UpdateReserva extends javax.swing.JFrame {
     private javax.swing.JLabel cancel;
     private javax.swing.JPanel cancelButton;
     private javax.swing.JTextField codReservaTf;
-    private javax.swing.JTextField dataChegadaTf;
-    private javax.swing.JTextField dataReservaTf;
+    private com.toedter.calendar.JDateChooser dataChegadaTf;
+    private com.toedter.calendar.JDateChooser dataReservaTf;
     private javax.swing.JLabel delete;
     private javax.swing.JPanel deleteButton;
     private javax.swing.JComboBox<String> estadoCB;

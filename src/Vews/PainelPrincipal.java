@@ -1,6 +1,10 @@
 package Vews;
 
-import Vews.Hospede.PainelHospedes;
+//import Vews.Hospede.PainelHospedes;
+import Vews.Hospedagem.PainelHospedagem;
+import Vews.Hospede.PainelHospeds;
+import Vews.Reservas.PainelReservas;
+import Vews.User.PainelUsuarios;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,12 +13,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.Icon;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -26,27 +29,29 @@ public class PainelPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form PainelPrincipal
      */
-    boolean a=true;
-    PainelQuartos tq = new PainelQuartos();
-    PainelHospedes painelHospedes = new PainelHospedes();
+    boolean a=false;
+    PainelQuartos tq;
+    //PainelHospedes painelHospedes = new PainelHospedes();
     
-    BasicInternalFrameUI bi = (BasicInternalFrameUI)painelHospedes.getUI();
+    //BasicInternalFrameUI bi = (BasicInternalFrameUI)painelHospedes.getUI();
     
     
     Font font;
-    public PainelPrincipal() {
-        this.font = new Font(Font.SERIF,Font.PLAIN,20);
+    public PainelPrincipal() throws InterruptedException {
         
+        this.tq = new PainelQuartos();
+        this.font = new Font(Font.SERIF,Font.PLAIN,20);
         initComponents();
        // PainelQuartos.setLayout(new MigLayout("wrap 5"));
-       bi.setNorthPane(null);
+      // bi.setNorthPane(null);
        
        Date date =new Date();
        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyy");
        data.setText(sdf.format(date));
        setExtendedState(MAXIMIZED_BOTH);
-       jDesktopPane2.add(painelHospedes);
-       painelHospedes.setVisible(true);
+       jDesktopPane2.add(tq);
+       tq.setVisible(true);
+       
     }
       
     public void ChangeColor(JPanel painel,Color cor){
@@ -131,6 +136,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
         data = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         mainPanel.setLayout(new java.awt.BorderLayout());
 
@@ -187,7 +193,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(245, 239, 239));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit_35px.png"))); // NOI18N
         jLabel3.setText("Exit");
 
         javax.swing.GroupLayout exitButtonLayout = new javax.swing.GroupLayout(exitButton);
@@ -214,7 +220,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         //jPanel1.setBackground(new Color(238,225,225,1));
         sideFirstPanel.setBackground(new java.awt.Color(194, 194, 194,1));
-        sideFirstPanel.setPreferredSize(new java.awt.Dimension(335, 588));
+        sideFirstPanel.setPreferredSize(new java.awt.Dimension(350, 588));
         sideFirstPanel.setLayout(new java.awt.BorderLayout());
 
         sideSecPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -237,6 +243,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
         sideSecPanel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, -1));
 
         menuButton.setAlignmentY(5.0F);
+        menuButton.setPreferredSize(new java.awt.Dimension(335, 70));
         menuButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuButtonMouseClicked(evt);
@@ -288,6 +295,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         sideSecPanel.add(lineHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, -1, -1));
 
+        homeButton.setBackground(new java.awt.Color(142, 144, 148));
         homeButton.setPreferredSize(new java.awt.Dimension(320, 70));
         homeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -340,6 +348,9 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         resButton.setPreferredSize(new java.awt.Dimension(141, 45));
         resButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 resButtonMouseEntered(evt);
             }
@@ -389,6 +400,9 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         hospButton.setPreferredSize(new java.awt.Dimension(320, 70));
         hospButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hospButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 hospButtonMouseEntered(evt);
             }
@@ -438,6 +452,9 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         HospedeButton.setPreferredSize(new java.awt.Dimension(320, 70));
         HospedeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HospedeButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 HospedeButtonMouseEntered(evt);
             }
@@ -487,6 +504,9 @@ public class PainelPrincipal extends javax.swing.JFrame {
 
         userButton.setPreferredSize(new java.awt.Dimension(320, 70));
         userButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 userButtonMouseEntered(evt);
             }
@@ -643,7 +663,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
         footer.setLayout(footerLayout);
         footerLayout.setHorizontalGroup(
             footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 335, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
         footerLayout.setVerticalGroup(
             footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,7 +688,7 @@ public class PainelPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(593, Short.MAX_VALUE)
+                .addContainerGap(578, Short.MAX_VALUE)
                 .addComponent(data)
                 .addContainerGap())
         );
@@ -814,6 +834,22 @@ public class PainelPrincipal extends javax.swing.JFrame {
         ChangeColor(exitButton,new Color(82, 82, 82));
     }//GEN-LAST:event_exitButtonMouseExited
 
+    private void resButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resButtonMouseClicked
+        new PainelReservas().setVisible(a);
+    }//GEN-LAST:event_resButtonMouseClicked
+
+    private void hospButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hospButtonMouseClicked
+        new PainelHospedagem().setVisible(true);
+    }//GEN-LAST:event_hospButtonMouseClicked
+
+    private void HospedeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HospedeButtonMouseClicked
+        new PainelHospeds().setVisible(true);
+    }//GEN-LAST:event_HospedeButtonMouseClicked
+
+    private void userButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userButtonMouseClicked
+        new PainelUsuarios().setVisible(true);
+    }//GEN-LAST:event_userButtonMouseClicked
+
     
     /**
      * @param args the command line arguments
@@ -846,7 +882,11 @@ public class PainelPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PainelPrincipal().setVisible(true);
+                try {
+                    new PainelPrincipal().setVisible(true);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PainelPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

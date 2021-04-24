@@ -87,11 +87,21 @@ public class UpdateUser extends javax.swing.JFrame {
                 nomeTfActionPerformed(evt);
             }
         });
+        nomeTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nomeTfKeyTyped(evt);
+            }
+        });
 
         apelidoTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         apelidoTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 apelidoTfActionPerformed(evt);
+            }
+        });
+        apelidoTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apelidoTfKeyTyped(evt);
             }
         });
 
@@ -102,6 +112,11 @@ public class UpdateUser extends javax.swing.JFrame {
         telefoneTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 telefoneTfActionPerformed(evt);
+            }
+        });
+        telefoneTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                telefoneTfKeyTyped(evt);
             }
         });
 
@@ -203,14 +218,17 @@ public class UpdateUser extends javax.swing.JFrame {
         });
 
         codigoTf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        codigoTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codigoTfActionPerformed(evt);
+        codigoTf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                codigoTfKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codigoTfKeyTyped(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
-        jLabel8.setText("Palavra Pass:");
+        jLabel8.setText("Pin:");
 
         deleteButton.setBackground(new java.awt.Color(82, 82, 82));
         deleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -253,6 +271,9 @@ public class UpdateUser extends javax.swing.JFrame {
         idTf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 idTfKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idTfKeyTyped(evt);
             }
         });
 
@@ -443,10 +464,6 @@ public class UpdateUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_userNameTfActionPerformed
 
-    private void codigoTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoTfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_codigoTfActionPerformed
-
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
         new UsuarioDAO().remove(Integer.parseInt(idTf.getText()));
         this.dispose();
@@ -483,6 +500,45 @@ public class UpdateUser extends javax.swing.JFrame {
             acessoCB.setSelectedIndex(selectedIndex);
         }
     }//GEN-LAST:event_idTfKeyPressed
+
+    private void idTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_idTfKeyTyped
+
+    private void nomeTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nomeTfKeyTyped
+
+    private void apelidoTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apelidoTfKeyTyped
+        char c =evt.getKeyChar();
+        if((c<'a' || c>'z')&&(c<'A'||c>'Z')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_apelidoTfKeyTyped
+
+    private void telefoneTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefoneTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_telefoneTfKeyTyped
+
+    private void codigoTfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTfKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codigoTfKeyPressed
+
+    private void codigoTfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoTfKeyTyped
+        char c =evt.getKeyChar();
+        if(c<'1' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_codigoTfKeyTyped
 
     /**
      * @param args the command line arguments

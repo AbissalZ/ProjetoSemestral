@@ -20,6 +20,20 @@ public class HospedagemDAO {
         }
         return hospedagem;
     }
+    public Hospedagem update(Hospedagem hospedagem){
+        EntityManager em = new ConnectionFactory().getConnection();
+        try{
+        em.getTransaction().begin();
+        em.merge(hospedagem);
+        em.getTransaction().commit();
+        }catch(Exception e){
+            System.err.println(e);
+            em.getTransaction().rollback();
+        }finally{
+            em.close();
+        }
+        return hospedagem;
+    }
     public Hospedagem findById(Integer id){
         EntityManager em = new ConnectionFactory().getConnection();
         Hospedagem hospedagem=null;

@@ -6,14 +6,12 @@
 package Vews.Hospedagem;
 
 import Controller.HospedagemDAO;
-import Controller.QuartoDAO;
 import Models.Hospedagem;
 import Models.Hospede;
 import Models.Quarto;
 import Models.Reservas;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,19 +22,12 @@ import javax.swing.JPanel;
  */
 public class AddHospedagens extends javax.swing.JFrame {
     
-    List <Quarto> quartos= new QuartoDAO().findAll();
+    Quarto quarto;
     /**
      * Creates new form AddHospedagens
      */
     public AddHospedagens() {
-        initComponents();
-        
-        String quarto []=new String[quartos.size()];
-        for(int i=0;i<quartos.size();i++){
-            quarto[i]="Id: "+quartos.get(i).getIdQuarto()+" "+quartos.get(i).getTipo()+" "+quartos.get(i).getStatus()+" "+
-                    quartos.get(i).getDisp();
-        }
-        quartoCB.setModel( new javax.swing.DefaultComboBoxModel<>(quarto));
+        initComponents();    
     }
     public void ChangeColor(JPanel painel,Color cor){
         painel.setBackground(cor);
@@ -65,8 +56,8 @@ public class AddHospedagens extends javax.swing.JFrame {
         idHospede = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         idReserva = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        quartoCB = new javax.swing.JComboBox<>();
+        dataSaidaTf = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -84,9 +75,9 @@ public class AddHospedagens extends javax.swing.JFrame {
         jLabel6.setText("Data de Entrada:");
 
         nrHospedes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        nrHospedes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nrHospedesActionPerformed(evt);
+        nrHospedes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nrHospedesKeyTyped(evt);
             }
         });
 
@@ -164,9 +155,9 @@ public class AddHospedagens extends javax.swing.JFrame {
         jLabel9.setText("Id do Hospede:");
 
         idHospede.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        idHospede.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idHospedeActionPerformed(evt);
+        idHospede.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idHospedeKeyTyped(evt);
             }
         });
 
@@ -174,16 +165,17 @@ public class AddHospedagens extends javax.swing.JFrame {
         jLabel10.setText("Id da Reserva:");
 
         idReserva.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        idReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idReservaActionPerformed(evt);
+        idReserva.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idReservaKeyTyped(evt);
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
-        jLabel11.setText("Quarto:");
+        dataSaidaTf.setDateFormatString("dd/mm/yyyy");
+        dataSaidaTf.setIcon(new ImageIcon(getClass().getResource("/Images/icons8_calendar_27px_1.png")));
 
-        quartoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel7.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
+        jLabel7.setText("Data de Saida:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -201,7 +193,11 @@ public class AddHospedagens extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(dataEntradaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(dataEntradaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(dataSaidaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -214,11 +210,7 @@ public class AddHospedagens extends javax.swing.JFrame {
                                 .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(idReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(quartoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(idReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(187, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -229,7 +221,11 @@ public class AddHospedagens extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
                     .addComponent(dataEntradaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7)
+                    .addComponent(dataSaidaTf, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(nrHospedes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,15 +237,11 @@ public class AddHospedagens extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(idReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(quartoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                .addGap(53, 53, 53)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -266,21 +258,9 @@ public class AddHospedagens extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nrHospedesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nrHospedesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nrHospedesActionPerformed
-
     private void cancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseClicked
         this.dispose();
     }//GEN-LAST:event_cancelButtonMouseClicked
-
-    private void idHospedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idHospedeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idHospedeActionPerformed
-
-    private void idReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idReservaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idReservaActionPerformed
 
     private void saveButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseEntered
         ChangeColor(saveButton,new Color(255,255,255));
@@ -303,36 +283,65 @@ public class AddHospedagens extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonMouseExited
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
-        if(dataEntradaTf.getDate().toString().isEmpty()||nrHospedes.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Data ou numero de hospedes nao preenchidos!");
+        if(dataEntradaTf.getDate().toString().isEmpty()||nrHospedes.getText().isEmpty()||dataSaidaTf.getDate().toString().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Datas ou numero de hospedes nao preenchidos!");
         }
         else if(idHospede.getText().isEmpty() && idReserva.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Introduza o Id do hospede ou de uma reserva!");
         }
         else{
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
             Hospedagem hospedagem = new Hospedagem();
             hospedagem.setDataEntrada(sdf.format(dataEntradaTf.getDate()));
+            hospedagem.setDataSaida(sdf1.format(dataSaidaTf.getDate()));
             hospedagem.setNrDeHospedes(Integer.parseInt(nrHospedes.getText()));
             if(idHospede.getText().isEmpty()){
                 Reservas reserva = new Reservas();
                 reserva.setIdReserva(Integer.parseInt(idReserva.getText()));
                 hospedagem.setReserva(reserva);
-                //hospedagem.setHospede(null);
+                
             }else{
                 Hospede hospede = new Hospede();
                 hospede.setIdPessoa(Integer.parseInt(idHospede.getText()));
                 hospedagem.setHospede(hospede);
             }
-            int index=quartoCB.getSelectedIndex()+1;
-            Quarto quarto = new Quarto();
-            quarto.setIdQuarto(index);
             hospedagem.setQuarto(quarto);
             new HospedagemDAO().save(hospedagem);
             this.dispose();
         }
     }//GEN-LAST:event_saveButtonMouseClicked
 
+    private void nrHospedesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nrHospedesKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nrHospedesKeyTyped
+
+    private void idHospedeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idHospedeKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_idHospedeKeyTyped
+
+    private void idReservaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idReservaKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_idReservaKeyTyped
+
+    public Quarto getQuarto() {
+        return quarto;
+    }
+
+    public void setQuarto(Quarto quarto) {
+        this.quarto = quarto;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -372,18 +381,18 @@ public class AddHospedagens extends javax.swing.JFrame {
     private javax.swing.JLabel cancel;
     private javax.swing.JPanel cancelButton;
     private com.toedter.calendar.JDateChooser dataEntradaTf;
+    private com.toedter.calendar.JDateChooser dataSaidaTf;
     private javax.swing.JTextField idHospede;
     private javax.swing.JTextField idReserva;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JTextField nrHospedes;
-    private javax.swing.JComboBox<String> quartoCB;
     private javax.swing.JLabel save;
     private javax.swing.JPanel saveButton;
     // End of variables declaration//GEN-END:variables

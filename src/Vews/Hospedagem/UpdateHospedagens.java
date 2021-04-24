@@ -10,13 +10,14 @@ import Controller.QuartoDAO;
 import Models.Hospedagem;
 import Models.Hospede;
 import Models.Quarto;
-import Models.Reservas;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -30,7 +31,7 @@ public class UpdateHospedagens extends javax.swing.JFrame {
      */
     public UpdateHospedagens() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         String quarto []=new String[quartos.size()];
         for(int i=0;i<quartos.size();i++){
             quarto[i]="Id: "+quartos.get(i).getIdQuarto()+" "+quartos.get(i).getTipo()+" "+quartos.get(i).getStatus()+" "+
@@ -43,6 +44,56 @@ public class UpdateHospedagens extends javax.swing.JFrame {
     public void ChangeColor(JPanel painel,Color cor){
         painel.setBackground(cor);
     }
+
+    public List<Quarto> getQuartos() {
+        return quartos;
+    }
+
+    public void setQuartos(List<Quarto> quartos) {
+        this.quartos = quartos;
+    }
+
+    public JTextField getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(JTextField dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
+
+    public JDateChooser getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(JDateChooser dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
+    public JTextField getIdHospedagem() {
+        return idHospedagem;
+    }
+
+    public void setIdHospedagem(JTextField idHospedagem) {
+        this.idHospedagem = idHospedagem;
+    }
+
+    public JTextField getIdHospede() {
+        return idHospede;
+    }
+
+    public void setIdHospede(JTextField idHospede) {
+        this.idHospede = idHospede;
+    }
+
+    public JComboBox<String> getQuartoCB() {
+        return quartoCB;
+    }
+
+    public void setQuartoCB(JComboBox<String> quartoCB) {
+        this.quartoCB = quartoCB;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,6 +148,11 @@ public class UpdateHospedagens extends javax.swing.JFrame {
         jLabel6.setText("Data de Entrada:");
 
         dataEntrada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dataEntrada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                dataEntradaKeyTyped(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel7.setText("Data de Saida:");
@@ -105,6 +161,11 @@ public class UpdateHospedagens extends javax.swing.JFrame {
         jLabel8.setText("Hospede:");
 
         idHospede.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        idHospede.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idHospedeKeyTyped(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
         jLabel10.setText("Quarto:");
@@ -178,6 +239,9 @@ public class UpdateHospedagens extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 idHospedagemKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                idHospedagemKeyTyped(evt);
+            }
         });
 
         jLabel16.setFont(new java.awt.Font("Serif", 0, 19)); // NOI18N
@@ -218,6 +282,11 @@ public class UpdateHospedagens extends javax.swing.JFrame {
         quartoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         dataSaida.setDateFormatString("dd/mm/yyy");
+        dataSaida.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                dataSaidaKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -305,7 +374,7 @@ public class UpdateHospedagens extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Hospedagem hospedagem = new Hospedagem();
         hospedagem.setDataEntrada(dataEntrada.getText());
         hospedagem.setDataSaida(sdf.format(dataSaida.getDate()));
@@ -316,7 +385,7 @@ public class UpdateHospedagens extends javax.swing.JFrame {
         Quarto quarto = new Quarto();
         quarto.setIdQuarto(index);
         hospedagem.setQuarto(quarto);
-        new HospedagemDAO().save(hospedagem);
+        new HospedagemDAO().update(hospedagem);
         this.dispose();    
     }//GEN-LAST:event_updateButtonMouseClicked
 
@@ -380,6 +449,34 @@ public class UpdateHospedagens extends javax.swing.JFrame {
             quartoCB.setSelectedIndex(index);
         }
     }//GEN-LAST:event_idHospedagemKeyPressed
+
+    private void idHospedagemKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idHospedagemKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_idHospedagemKeyTyped
+
+    private void dataEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dataEntradaKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_dataEntradaKeyTyped
+
+    private void dataSaidaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dataSaidaKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_dataSaidaKeyTyped
+
+    private void idHospedeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idHospedeKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+    }//GEN-LAST:event_idHospedeKeyTyped
 
     /**
      * @param args the command line arguments
